@@ -35,7 +35,7 @@
   <!-- Main Container -->
   <main class="flex-1 flex flex-col items-center justify-center p-3 sm:p-6 w-full max-w-5xl mx-auto">
     
-    <!-- Step 1: Quiz Question Screen (Directly Visible) -->
+    <!-- Quiz Question Screen (Directly Visible) -->
     <div id="quizScreen" class="w-full flex flex-col space-y-4">
       <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 shadow-md">
         <div class="flex items-center space-x-3">
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <!-- Step 2: Result Screen -->
+    <!-- Result Screen -->
     <div id="resultScreen" class="w-full hidden space-y-6">
       <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl text-center space-y-5">
         
@@ -252,6 +252,7 @@
     let timeLeft = 50 * 60;[cite: 6]
     let timerInterval = null;[cite: 6]
 
+    // 🌟 പേജ് ലോഡ് ആകുന്ന നിമിഷം തന്നെ നേരിട്ട് പരീക്ഷ തുടങ്ങുന്നു
     window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const passedName = urlParams.get('name');
@@ -271,26 +272,11 @@
       if (passedPdf) ORIGINAL_PDF_URL = decodeURIComponent(passedPdf);
 
       document.getElementById('displayUser').innerText = `${currentUser.name} (+91 ${currentUser.phone})`;
-      document.getElementById('motivateName').innerText = `ഹലോ, ${currentUser.name}! ✨`;
 
-      // 🌟 സ്റ്റാർട്ട് ബട്ടൺ അമർത്തുമ്പോൾ യാതൊരു തടസ്സവുമില്ലാതെ പരീക്ഷ നേരിട്ട് തുടങ്ങും
-      const startBtn = document.getElementById('startExamBtn');
-      if (startBtn) {
-        startBtn.addEventListener('click', () => {
-          const motScreen = document.getElementById('motivationScreen');
-          if (motScreen) motScreen.classList.add('hidden');
-
-          const qScreen = document.getElementById('quizScreen');
-          if (qScreen) {
-            qScreen.classList.remove('hidden');
-            qScreen.classList.add('flex');
-          }
-
-          buildPalette();
-          renderQuestion(0);
-          startTimer();
-        });
-      }
+      // നേരിട്ട് ചോദ്യങ്ങൾ റെൻഡർ ചെയ്ത് ടൈമർ സ്റ്റാർട്ട് ചെയ്യുന്നു
+      buildPalette();
+      renderQuestion(0);
+      startTimer();
     });
 
     function returnToHomeWithData() {
@@ -592,60 +578,7 @@
       });
     });
 
-    function fetchLiveLeaderboard() {
-      const modal = document.getElementById('leaderboardModal');[cite: 6]
-      const loader = document.getElementById('leaderboardLoading');[cite: 6]
-      const wrapper = document.getElementById('leaderboardTableWrapper');[cite: 6]
-      const tbody = document.getElementById('leaderboardBody');[cite: 6]
-
-      modal.classList.remove('hidden');[cite: 6]
-      loader.classList.remove('hidden');[cite: 6]
-      wrapper.classList.add('hidden');[cite: 6]
-      tbody.innerHTML = '';[cite: 6]
-
-      if (!GOOGLE_SHEET_WEBAPP_URL || GOOGLE_SHEET_WEBAPP_URL.includes("YOUR_APPS_SCRIPT_WEBAPP_URL_HERE")) {
-        loader.innerText = "Google Apps Script URL സെറ്റ് ചെയ്തിട്ടില്ല.";[cite: 6]
-        return;
-      }
-
-      fetch(GOOGLE_SHEET_WEBAPP_URL)[cite: 6]
-        .then(res => res.json())[cite: 6]
-        .then(data => {
-          loader.classList.add('hidden');[cite: 6]
-          wrapper.classList.remove('hidden');[cite: 6]
-
-          if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="py-6 text-center text-slate-500">ഇതുവരെ ആരും പരീക്ഷ പൂർത്തിയാക്കിയിട്ടില്ല.</td></tr>';[cite: 6]
-            return;
-          }
-
-          data.sort((a, b) => b.score - a.score || b.correct - a.correct);[cite: 6]
-
-          data.forEach((entry, idx) => {
-            const masked = entry.phone ? String(entry.phone).substring(0, 5) + '*****' : '---';[cite: 6]
-            const row = document.createElement('tr');[cite: 6]
-            row.className = 'hover:bg-slate-700/30 text-slate-300';[cite: 6]
-            row.innerHTML = `
-              <td class="py-2.5 px-3 font-mono font-bold">${idx + 1}</td>
-              <td class="py-2.5 px-3 font-medium">${entry.name}</td>
-              <td class="py-2.5 px-3 font-mono text-xs text-slate-400">${masked}</td>
-              <td class="py-2.5 px-3 text-right font-mono font-bold text-violet-400">${Number(entry.score || 0).toFixed(2)}</td>
-            `;[cite: 6]
-            tbody.appendChild(row);[cite: 6]
-          });
-        })
-        .catch(() => {
-          loader.innerText = "റാങ്ക് ലിസ്റ്റ് ലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല. ദയവായി അല്പം കഴിഞ്ഞ് ശ്രമിക്കുക.";[cite: 6]
-        });
-    }
-
-    document.getElementById('showLeaderboardBtn').onclick = fetchLiveLeaderboard;[cite: 6]
-    document.getElementById('closeLeaderboardBtn').onclick = () => {
-      document.getElementById('leaderboardModal').classList.add('hidden');[cite: 6]
-    };
-    document.getElementById('closeLeaderboardBtn2').onclick = () => {
-      document.getElementById('leaderboardModal').classList.add('hidden');[cite: 6]
-    };
+    // Rank list modal functions are removed/hidden since rank list is moved to home page.
   </script>
 </body>
 </html>
