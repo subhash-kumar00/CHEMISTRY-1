@@ -18,16 +18,16 @@
   <!-- Header -->
   <header class="bg-slate-800/95 backdrop-blur border-b border-slate-700 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-50">
     <div class="flex items-center space-x-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-500 to-fuchsia-600 flex items-center justify-center font-black text-xl shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-500 to-fuchsia-600 flex items-center justify-center font-black text-xl shadow-lg text-white">
         PSC
       </div>
       <div>
         <h1 id="headerExamTitle" class="font-bold text-base sm:text-lg text-violet-400 leading-tight">രസതന്ത്രം (Chemistry Part 1)</h1>
-        <p class="text-xs text-slate-400">Special Notes by Subhash Kumar | 50 ചോദ്യങ്ങൾ (50 മിനിറ്റ് മോഡൽ എക്സാം)</p>
+        <p class="text-xs text-slate-400">Special Notes by Subhash Kumar | 50 ചോദ്യങ്ങൾ (50 മിനിറ്റ്)</p>
       </div>
     </div>
-    <div id="userInfoHeader" class="text-right">
-      <span id="displayUser" class="text-xs sm:text-sm font-semibold text-slate-200"></span>
+    <div class="text-right">
+      <span id="displayUser" class="text-xs sm:text-sm font-semibold text-slate-200">പരീക്ഷാർത്ഥി</span>
       <p class="text-[10px] text-emerald-400 font-mono">+1.00 / -0.33 Mark</p>
     </div>
   </header>
@@ -35,376 +35,248 @@
   <!-- Main Container -->
   <main class="flex-1 flex flex-col items-center justify-center p-3 sm:p-6 w-full max-w-5xl mx-auto">
     
-    <!-- Quiz Question Screen -->
+    <!-- Quiz Screen -->
     <div id="quizScreen" class="w-full flex flex-col space-y-4">
       <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 shadow-md">
         <div class="flex items-center space-x-3">
           <span class="px-3 py-1 bg-violet-500/20 text-violet-300 font-bold rounded-lg text-xs sm:text-sm" id="questionBadge">ചോദ്യം 1 / 50</span>
-          <span class="text-xs text-slate-400" id="answeredCountTxt">പൂർത്തിയാക്കിയത്: 0/50</span>
         </div>
-
-        <div class="flex items-center space-x-2 bg-slate-900/90 border border-slate-700 px-3.5 py-1 rounded-xl shadow-inner">
-          <svg class="w-4 h-4 text-violet-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <span class="text-xs font-semibold text-slate-400">സമയം:</span>
+        <div class="flex items-center space-x-2 bg-slate-900/90 border border-slate-700 px-3.5 py-1 rounded-xl">
+          <span class="text-xs text-slate-400">സമയം:</span>
           <span id="examTimer" class="font-mono text-sm font-black text-violet-400">50:00</span>
         </div>
-
-        <button type="button" id="finishMidBtn" class="px-3.5 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-semibold rounded-lg transition">
+        <button type="button" onclick="finishExam()" class="px-3.5 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-semibold rounded-lg">
           ഫിനിഷ് ചെയ്യുക
         </button>
       </div>
 
       <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 sm:p-8 shadow-2xl relative">
         <div class="mb-6">
-          <h2 id="qText" class="text-base sm:text-lg font-semibold leading-relaxed text-slate-100 whitespace-pre-line">ലോഡ് ചെയ്യുന്നു...</h2>
+          <h2 id="qText" class="text-base sm:text-lg font-semibold leading-relaxed text-slate-100">ചോദ്യം ലോഡ് ആകുന്നു...</h2>
         </div>
 
         <div id="optionsContainer" class="space-y-3 mb-8"></div>
 
         <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-700">
-          <button type="button" id="prevBtn" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition disabled:opacity-40">
+          <button type="button" id="prevBtn" onclick="prevQuestion()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs sm:text-sm font-semibold rounded-xl">
             ‹ Previous
           </button>
-          <div class="flex items-center space-x-2">
-            <button type="button" id="skipBtn" class="px-3.5 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm rounded-xl border border-slate-600 transition">
-              Skip
-            </button>
-            <button type="button" id="nextBtn" class="px-5 py-2 bg-violet-500 hover:bg-violet-600 text-white font-bold text-xs sm:text-sm rounded-xl transition transform active:scale-95 shadow-md">
-              Next ›
-            </button>
-          </div>
+          <button type="button" id="nextBtn" onclick="nextQuestion()" class="px-5 py-2 bg-violet-500 hover:bg-violet-600 text-white font-bold text-xs sm:text-sm rounded-xl">
+            Next ›
+          </button>
         </div>
-      </div>
-
-      <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-3">
-        <p class="text-xs font-semibold text-slate-400 mb-2">ചോദ്യങ്ങളിലേക്ക് നേരിട്ട് പോകാൻ ക്ലിക്ക് ചെയ്യുക:</p>
-        <div id="paletteContainer" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scroll pr-1"></div>
       </div>
     </div>
 
     <!-- Result Screen -->
     <div id="resultScreen" class="w-full hidden space-y-6">
       <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl text-center space-y-5">
-        
         <div class="flex justify-end">
-          <button type="button" onclick="returnToHomeWithData()" class="px-4 py-2 bg-violet-500 hover:bg-violet-400 text-slate-950 font-black rounded-xl text-xs transition shadow flex items-center space-x-1.5">
-            <span>🏠</span>
-            <span>ഹോം പേജിലേക്ക് മടങ്ങുക (Save Result)</span>
+          <button type="button" onclick="returnToHomeWithData()" class="px-4 py-2 bg-violet-500 hover:bg-violet-400 text-slate-950 font-black rounded-xl text-xs transition shadow">
+            🏠 ഹോം പേജിലേക്ക് മടങ്ങുക (Save Result)
           </button>
         </div>
 
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-black text-violet-400 mb-1">പരീക്ഷാ ഫലം (Exam Result)</h2>
-          <p class="text-sm text-slate-400 mb-1" id="resultCandidateInfo"></p>
-          <span class="inline-block text-[11px] text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800">
-            ✓ ഫലം പ്രൊഫൈൽ ഹിസ്റ്ററിയിൽ രേഖപ്പെടുത്തിയിട്ടുണ്ട്
-          </span>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto">
-          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700">
-            <span class="text-xs text-slate-400 block font-semibold uppercase">നെറ്റ് സ്കോർ</span>
-            <span id="finalScore" class="text-2xl sm:text-3xl font-black text-violet-400 font-mono">0.00</span>
-            <span class="text-[10px] text-slate-500 block">50 ൽ</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-violet-400 mb-1">പരീക്ഷാ ഫലം (Exam Result)</h2>
+        
+        <div class="grid grid-cols-3 gap-3 max-w-lg mx-auto">
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+            <span class="text-xs text-slate-400 block uppercase">സ്കോർ</span>
+            <span id="finalScore" class="text-2xl font-black text-violet-400 font-mono">0.00</span>
           </div>
-          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-emerald-900/50">
-            <span class="text-xs text-emerald-400 block font-semibold uppercase">ശരി (+1)</span>
-            <span id="correctCount" class="text-xl sm:text-2xl font-bold text-emerald-400 font-mono">0</span>
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-emerald-900/50">
+            <span class="text-xs text-emerald-400 block uppercase">ശരി</span>
+            <span id="correctCount" class="text-xl font-bold text-emerald-400 font-mono">0</span>
           </div>
-          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-rose-900/50">
-            <span class="text-xs text-rose-400 block font-semibold uppercase">തെറ്റ് (-0.33)</span>
-            <span id="wrongCount" class="text-xl sm:text-2xl font-bold text-rose-400 font-mono">0</span>
-          </div>
-          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700">
-            <span class="text-xs text-slate-400 block font-semibold uppercase">Skip ചെയ്തവ</span>
-            <span id="skipCount" class="text-xl sm:text-2xl font-bold text-slate-300 font-mono">0</span>
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-rose-900/50">
+            <span class="text-xs text-rose-400 block uppercase">തെറ്റ്</span>
+            <span id="wrongCount" class="text-xl font-bold text-rose-400 font-mono">0</span>
           </div>
         </div>
 
-        <div id="sheetStatus" class="text-xs text-violet-400 animate-pulse">സ്കോർ ഗൂഗിൾ ഷീറ്റിലേക്ക് രേഖപ്പെടുത്തുന്നു...</div>
-
-        <div id="pdfLockNotice" class="hidden max-w-md mx-auto p-3.5 bg-rose-950/40 border border-rose-800/80 rounded-xl text-xs text-rose-300">
-          ⚠️ <strong>ശ്രദ്ധിക്കുക:</strong> കുറഞ്ഞത് 15 മാർക്ക് നേടിയാൽ മാത്രമേ ഔദ്യോഗിക നോട്ടുകൾ PDF ഡൗൺലോഡ് ചെയ്യാൻ സാധിക്കൂ.
-        </div>
-
-        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-          <a id="originalPdfDownloadLink" href="#" target="_blank" class="hidden px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 text-slate-950 font-black rounded-xl text-sm transition shadow-lg flex items-center space-x-2">
-            <span>ഔദ്യോഗിക നോട്ടുകൾ PDF ഡൗൺലോഡ് ചെയ്യുക 📥</span>
-          </a>
-
-          <button type="button" id="downloadPdfBtn" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-sm transition shadow-lg">
-            സ്കോർകാർഡ് PDF
-          </button>
-
-          <button type="button" onclick="returnToHomeWithData()" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl text-sm transition">
-            🏠 ഹോം പോർട്ടൽ
-          </button>
-        </div>
-      </div>
-
-      <div id="pdfExportWrapper" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl">
-        <div class="border-b border-slate-700 pb-4 mb-6">
-          <h3 class="text-xl font-bold text-violet-400" id="solutionsTitleDisplay">ഉത്തര സൂചിക</h3>
-          <p class="text-xs text-slate-400 mt-1" id="pdfReportCandidateSubheader">പരീക്ഷാർത്ഥി വിവരങ്ങൾ</p>
-        </div>
-        <div id="solutionsContainer" class="space-y-6"></div>
+        <button type="button" onclick="returnToHomeWithData()" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl text-sm">
+          🏠 ഹോം പോർട്ടലിലേക്ക് തിരികെ പോവുക
+        </button>
       </div>
     </div>
 
   </main>
 
-  <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800">
-    Special Notes by Subhash Kumar
-  </footer>
-
   <script>
-    let GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzhj0d9E7_wRprcbFkVhgz3WiOIZ_8xWXpnuWXq1PxD2RU-mxtFnY6G6bNl6Cn0ODt29w/exec";[cite: 6]
-    let ORIGINAL_PDF_URL = "https://drive.google.com/file/d/1zK51trXbk98GT3nt45Ja3AC1_XEd1RTX/view?usp=sharing";[cite: 6]
-    let examTitle = document.title;
-
+    // മുഴുവൻ 50 ചോദ്യങ്ങളും ഇവിടെ ഉൾപ്പെടുത്തിയിരിക്കുന്നു
     const questionsData = [
-      { q: "ആറ്റത്തെ പോസിറ്റീവ് ചാർജ്ജുള്ള ഗോളമായും ഇലക്ട്രോണുകളെ അതിൽ പതിഞ്ഞുകിടക്കുന്നതായും വിഭാവനം ചെയ്ത 'പ്ലം പുഡ്ഡിംഗ് മോഡൽ' ആവിഷ്കരിച്ചത് ആര്?", options: ["ജോൺ ഡാൽട്ടൺ", "ജെ.ജെ. തോംസൺ", "ഏണസ്റ്റ് റൂഥർഫോർഡ്", "നീൽസ് ബോർ"], ans: 1, exp: "1897-ൽ ഇലക്ട്രോൺ കണ്ടെത്തിയ ജെ.ജെ. തോംസൺ ആണ് പ്ലം പുഡ്ഡിംഗ് മോഡൽ അവതരിപ്പിച്ചത്[cite: 6]." },
-      { q: "സ്വർണ്ണത്തകിട് ആൽഫാ കണ പരീക്ഷണത്തിലൂടെ ആറ്റത്തിന് ഒരു പോസിറ്റീവ് ന്യൂക്ലിയസ് ഉണ്ടെന്ന് കണ്ടെത്തിയത് ആര്?", options: ["നീൽസ് ബോർ", "ജെയിംസ് ചാഡ്വിക്", "ഏണസ്റ്റ് റൂഥർഫോർഡ്", "മാക്സ് പ്ലാങ്ക്"], ans: 2, exp: "1911-ൽ റൂഥർഫോർഡ് നടത്തിയ ആൽഫാ കണ വിസരണ പരീക്ഷണമാണിത്[cite: 6]." },
-      { q: "ആറ്റത്തിലെ ഇലക്ട്രോണുകൾ ന്യൂക്ലിയസിന് ചുറ്റും നിശ്ചിത ഊർജ്ജമുള്ള വൃത്താകാര പാതകളിൽ (ഓർബിറ്റുകൾ) കറങ്ങുന്നു എന്ന ആറ്റം മാതൃക മുന്നോട്ടുവെച്ചത് ആര്?", options: ["റൂഥർഫോർഡ്", "നീൽസ് ബോർ", "ജെ.ജെ. തോംസൺ", "ലൂയി ഡിബ്രോളി"], ans: 1, exp: "1913-ൽ നീൽസ് ബോറാണ് ഊർജ്ജ നിലകൾ അടങ്ങിയ ആറ്റം മാതൃക അവതരിപ്പിച്ചത്[cite: 6]." },
-      { q: "ആധുനിക പീരിയോഡിക് ടേബിളിൽ മൂലകങ്ങളെ അവയുടെ ഏത് ക്രമത്തിലാണ് ക്രമീകരിച്ചിരിക്കുന്നത്?", options: ["അറ്റോമിക മാസ് വർദ്ധിക്കുന്ന ക്രമത്തിൽ", "അറ്റോമിക നമ്പർ വർദ്ധിക്കുന്ന ക്രമത്തിൽ", "അയോണീകരണ ഊർജ്ജം കുറയുന്ന ക്രമത്തിൽ", "സാന്ദ്രത വർദ്ധിക്കുന്ന ക്രമത്തിൽ"], ans: 1, exp: "ഹെൻറി മോസ്ലിയുടെ ആധുനിക നിയമപ്രകാരം അറ്റോമിക നമ്പറുകളുടെ ആവർത്തന ഫലമായാണ് ക്രമീകരിച്ചിരിക്കുന്നത്[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിൽ ഒരു പിരീഡിൽ ഇടത്തുനിന്ന് വലത്തോട്ട് നീങ്ങുമ്പോൾ അറ്റോമിക ആരം സാധാരണയായി എങ്ങനെ വ്യത്യാസപ്പെടുന്നു?", options: ["ക്രമമായി വർദ്ധിക്കുന്നു", "ക്രമമായി കുറയുന്നു", "മാറ്റമില്ലാതെ തുടരുന്നു", "ആദ്യം കുറഞ്ഞ് പിന്നീട് കൂടുന്നു"], ans: 1, exp: "ന്യൂക്ലിയർ ചാർജ്ജ് വർദ്ധിക്കുന്നതിനാൽ പിരീഡിൽ ഇടത്തുനിന്ന് വലത്തോട്ട് അറ്റോമിക ആരം കുറയുന്നു[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ അയോണീകരണ എന്താൽപ്പി ഉള്ള മൂലകം ഏതാണ്?", options: ["ഫ്ലൂറിൻ", "ഹൈഡ്രജൻ", "ഹീലിയം", "സീസിയം"], ans: 2, exp: "സ്ഥിരതയുള്ള ഇരട്ട ഇലക്ട്രോൺ വിന്യാസമുള്ള ഹീലിയത്തിനാണ് ഏറ്റവും ഉയർന്ന അയോണീകരണ ഊർജ്ജമുള്ളത്[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കുറഞ്ഞ അയോണീകരണ എന്താൽപ്പിയുള്ള മൂലകം ഏത്?", options: ["ലിഥിയം", "ഫ്രാൻസിയം", "സീസിയം", "പൊട്ടാസ്യം"], ans: 2, exp: "റേഡിയോ ആക്ടീവല്ലാത്ത മൂലകങ്ങളിൽ സീസിയത്തിന് ഏറ്റവും കുറഞ്ഞ അയോണീകരണ എന്താൽപ്പിയാണുള്ളത്[cite: 6]." },
-      { q: "പോളിംഗ് സ്കെയിൽ പ്രകാരം പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ ഇലക്ട്രോനെഗറ്റിവിറ്റി ഉള്ള മൂലകം ഏതാണ്?", options: ["ക്ലോറിൻ", "ഓക്സിജൻ", "ഫ്ലൂറിൻ", "നൈട്രജൻ"], ans: 2, exp: "ഇലക്ട്രോനെഗറ്റിവിറ്റി ഏറ്റവും കൂടുതൽ ഫ്ലൂറിനാണ് (4.0)[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ ഇലക്ട്രോൺ അഫിനിറ്റി പ്രകടിപ്പിക്കുന്ന മൂലകം ഏതാണ്?", options: ["ഫ്ലൂറിൻ", "ക്ലോറിൻ", "ബ്രോമിൻ", "അയോഡിൻ"], ans: 1, exp: "ഫ്ലൂറിനേക്കാൾ ഉയർന്ന ഇലക്ട്രോൺ സ്വീകരണ എന്താൽപ്പി ക്ലോറിനാണ്[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിലെ 18-ാം ഗ്രൂപ്പ് മൂലകങ്ങൾ ഏത് ബ്ലോക്കിലാണ് ഉൾപ്പെടുന്നത്?", options: ["s-ബ്ലോക്ക്", "p-ബ്ലോക്ക്", "d-ബ്ലോക്ക്", "f-ബ്ലോക്ക്"], ans: 1, exp: "ഉത്കൃഷ്ട വാതകങ്ങൾ p-ബ്ലോക്കിലാണ് ഉൾപ്പെടുന്നത്[cite: 6]." },
-      { q: "സംക്രമണ മൂലകങ്ങൾ പീരിയോഡിക് ടേബിളിലെ ഏത് ബ്ലോക്കിലാണ് ഉൾപ്പെടുന്നത്?", options: ["s-ബ്ലോക്ക്", "p-ബ്ലോക്ക്", "d-ബ്ലോക്ക്", "f-ബ്ലോക്ക്"], ans: 2, exp: "3 മുതൽ 12 വരെയുള്ള ഗ്രൂപ്പുകളിലെ മൂലകങ്ങളാണ് d-ബ്ലോക്ക് അഥവാ സംക്രമണ മൂലകങ്ങൾ[cite: 6]." },
-      { q: "ഒരു നിശ്ചിത താപനിലയിൽ കൂടുതൽ ലീനം ലയിച്ചുചേരാൻ സാധിക്കാത്ത വിധം പരമാവധി ലീനം അടങ്ങിയിരിക്കുന്ന ലായനി ഏത്?", options: ["അപൂരിത ലായനി", "പൂരിത ലായനി", "അതിപൂരിത ലായനി", "നേർപ്പിച്ച ലായനി"], ans: 1, exp: "ഇത് പൂരിത ലായനി (Saturated Solution) എന്നറിയപ്പെടുന്നു[cite: 6]." },
-      { q: "ദ്രാവക ലായകത്തിൽ ഒരു വാതക ലീനത്തിന്റെ ലേയത്വം മർദ്ദത്തിന് നേർ അനുപാതത്തിലായിരിക്കും എന്ന് വ്യക്തമാക്കുന്ന നിയമം ഏത്?", options: ["ബോയിൽ നിയമം", "ഹെൻറി നിയമം", "ചാൾസ് നിയമം", "റൗൾട്ട് നിയമം"], ans: 1, exp: "ഇത് ഹെൻറി നിയമം ആകുന്നു[cite: 6]." },
-      { q: "കൊളോയിഡൽ കണികകളിലൂടെ പ്രകാശകിരണങ്ങൾ കടന്നുപോകുമ്പോൾ പ്രകാശപാത ദൃശ്യമാകുന്ന പ്രതിഭാസം ഏത്?", options: ["ബ്രൗണിയൻ ചലനം", "ടിൻഡൽ പ്രഭാവം", "ഇലക്ട്രോഫോറെസിസ്", "ഡയാലിസിസ്"], ans: 1, exp: "പ്രകാശ വിസരണ പ്രതിഭാസമായ ടിൻഡൽ പ്രഭാവം[cite: 6]." },
-      { q: "ഒരു കൊളോയിഡൽ ലായനിയിൽ കണികകൾ നടത്തുന്ന ക്രമരഹിത ചലനത്തിന് പറയുന്ന പേരെന്ത്?", options: ["ടിൻഡൽ ചലനം", "ബ്രൗണിയൻ ചലനം", "അയോണീകരണം", "സബ്ളിമേഷൻ"], ans: 1, exp: "ഇത് ബ്രൗണിയൻ മൂവ്മെന്റ് ആകുന്നു[cite: 6]." },
-      { q: "പാൽ ഏത് തരം കൊളോയിഡിന് ഉദാഹരണമാണ്?", options: ["എമൽഷൻ", "എയറോസോൾ", "ഫോം", "സോൾ"], ans: 0, exp: "പാൽ ഒരു എമൽഷൻ ആണ്[cite: 6]." },
-      { q: "ജലത്തിൽ ലയിപ്പിക്കുമ്പോൾ ഹൈഡ്രോണിയം അയോണുകൾ നൽകുന്ന പദാർത്ഥങ്ങൾ ഏവ?", options: ["അർഹീനിയസ് സിദ്ധാന്തപ്രകാരം ആസിഡുകൾ", "ബ്രോൺസ്റ്റഡ്-ലോറി ബേസുകൾ", "ലൂയിസ് ആസിഡുകൾ", "ഇവയെല്ലാം"], ans: 0, exp: "അർഹീനിയസ് സിദ്ധാന്തപ്രകാരം H+ അയോണുകൾ നൽകുന്നവ ആസിഡുകളാണ്[cite: 6]." },
-      { q: "ബ്രോൺസ്റ്റഡ്-ലോറി സിദ്ധാന്ത പ്രകാരം ഒരു 'പ്രോട്ടോൺ ദാതാവ്' ആയി വർത്തിക്കുന്ന പദാർത്ഥം ഏതാണ്?", options: ["ബേസ്", "ആസിഡ്", "ലവണം", "ഇലക്ട്രോലൈറ്റ്"], ans: 1, exp: "പ്രോട്ടോൺ നൽകുന്നവ ആസിഡുകളാണ്[cite: 6]." },
-      { q: "ഒരു രാസപ്രവർത്തനത്തിൽ ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കാൻ കഴിവുള്ള പദാർത്ഥങ്ങളെ എന്ത് വിളിക്കുന്നു?", options: ["ലൂയിസ് ബേസ്", "ലൂയിസ് ആസിഡ്", "ന്യൂട്രൽ ലായനി", "ആൽക്കലി"], ans: 1, exp: "ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കുന്നവ ലൂയിസ് ആസിഡുകളാണ്[cite: 6]." },
-      { q: "ആസിഡും ആൽക്കലിയും തമ്മിൽ പ്രവർത്തിച്ച് ലവണവും ജലവും ഉണ്ടാകുന്ന പ്രവർത്തനം ഏത്?", options: ["അപഗ്രഥനം", "ശമനീകരണം", "ഓക്സീകരണം", "റിഡക്ഷൻ"], ans: 1, exp: "ഇത് ശമനീകരണം (Neutralisation) ആകുന്നു[cite: 6]." },
-      { q: "റൂഥർഫോർഡിന്റെ ആറ്റം മാതൃകയെക്കുറിച്ചുള്ള ശരിയായ പ്രസ്താവന ഏത്?", options: ["ആറ്റത്തിന്റെ കേന്ദ്രത്തിൽ പോസിറ്റീവ് ന്യൂക്ലിയസ് ഉണ്ട്", "ആറ്റത്തിന്റെ സ്ഥിരത തെളിയിച്ചു", "ഊർജ്ജ നിലകൾ വിശദീകരിച്ചു", "ഇവയെല്ലാം"], ans: 0, exp: "1 മാത്രം ശരിയാണ് (കേന്ദ്രത്തിൽ ന്യൂക്ലിയസ് ഉണ്ട്)[cite: 6]." },
-      { q: "നീൽസ് ബോറിന്റെ ആറ്റം സിദ്ധാന്ത പ്രകാരം ഏതാണ് ശരി?", options: ["ഓർബിറ്റിൽ കറങ്ങുമ്പോൾ ഊർജ്ജ നഷ്ടമില്ല", "ഏത് പാതയിലൂടെയും കറങ്ങാം", "ഊർജ്ജം വികിരണം ചെയ്യുന്നത് തുടർച്ചയാണ്", "ഇവയെല്ലാം"], ans: 0, exp: "ഊർജ്ജ നഷ്ടമില്ലാതെ നിശ്ചിത ഓർബിറ്റുകളിൽ കറങ്ങുന്നു[cite: 6]." },
-      { q: "ആധുനിക പീരിയോഡിക് ടേബിളിൽ ആകെ എത്ര പിരീഡുകളും ഗ്രൂപ്പുകളുമാണുള്ളത്?", options: ["7 പിരീഡുകൾ, 18 ഗ്രൂപ്പുകൾ", "8 പിരീഡുകൾ, 16 ഗ്രൂപ്പുകൾ", "6 പിരീഡുകൾ, 10 ഗ്രൂപ്പുകൾ", "7 പിരീഡുകൾ, 10 ഗ്രൂപ്പുകൾ"], ans: 0, exp: "7 പിരീഡുകളും 18 ഗ്രൂപ്പുകളുമാണുള്ളത്[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിൽ ഗ്രൂപ്പിൽ താഴേക്ക് പോകുന്തോറും അറ്റോമിക ആരം എന്ത് സംഭവിക്കുന്നു?", options: ["കുറയുന്നു", "വർദ്ധിക്കുന്നു", "മാറ്റമില്ല", "ആദ്യം കൂടി കുറയുന്നു"], ans: 1, exp: "പുതിയ ഷെല്ലുകൾ ചേരുന്നതിനാൽ ആരം വർദ്ധിക്കുന്നു[cite: 6]." },
-      { q: "അയോണീകരണ എന്താൽപ്പിയെ സ്വാധീനിക്കുന്ന ഘടകം ഏത്?", options: ["അറ്റോമിക ആരം", "ന്യൂക്ലിയർ ചാർജ്ജ്", "ഓർബിറ്റൽ സ്ഥിരത", "ഇവയെല്ലാം"], ans: 3, exp: "ഇവയെല്ലാം അയോണീകരണ എന്താൽപ്പിയെ സ്വാധീനിക്കുന്നു[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ ഇലക്ട്രോനെഗറ്റിവിറ്റിയുള്ള മൂലകം ഏത്?", options: ["ഫ്ലൂറിൻ", "ക്ലോറിൻ", "ഓക്സിജൻ", "നൈട്രജൻ"], ans: 0, exp: "ഫ്ലൂറിനാണ് ഏറ്റവും കൂടുതൽ ഇലക്ട്രോനെഗറ്റിവിറ്റിയുള്ളത്[cite: 6]." },
-      { q: "പീരിയോഡിക് ടേബിളിൽ ഗ്രൂപ്പിൽ താഴേക്ക് പോകുന്തോറും ലോഹസ്വഭാവം എന്ത് സംഭവിക്കുന്നു?", options: ["കുറയുന്നു", "വർദ്ധിക്കുന്നു", "മാറ്റമില്ല", "ശൂന്യമാകുന്നു"], ans: 1, exp: "ലോഹസ്വഭാവം വർദ്ധിക്കുന്നു[cite: 6]." },
-      { q: "യഥാർത്ഥ ലായനിയുടെ (True Solution) കണികകളുടെ വലിപ്പം എത്രയാണ്?", options: ["1 നാനോമീറ്ററിൽ താഴെ", "1 നാനോമീറ്ററിനും 1000 നാനോമീറ്ററിനും ഇടയിൽ", "1000 നാനോമീറ്ററിന് മുകളിൽ", "കണികകൾ കാണാം"], ans: 0, exp: "1 നാനോമീറ്ററിൽ താഴെയാണ് വലിപ്പം[cite: 6]." },
-      { q: "താപനില വർദ്ധിക്കുമ്പോൾ ഖര ലീനങ്ങളുടെ ലേയത്വം എന്ത് സംഭവിക്കുന്നു?", options: ["വർദ്ധിക്കുന്നു", "കുറയുന്നു", "മാറ്റമില്ല", "പൂജ്യമാകുന്നു"], ans: 0, exp: "ഭൂരിഭാഗം ഖര ലീനങ്ങളുടെയും ലേയത്വം വർദ്ധിക്കുന്നു[cite: 6]." },
-      { q: "സസ്പെൻഷനിലെ കണികകളുടെ സവിശേഷത എന്താണ്?", options: ["അടിഞ്ഞുകൂടുന്നു", "തങ്ങിനിൽക്കുന്നു", "ലയിക്കുന്നു", "പ്രകാശത്തെ കടത്തിവിടുന്നു"], ans: 0, exp: "ഗുരുത്വാകർഷണം മൂലം അടിഞ്ഞുകൂടുന്നു[cite: 6]." },
-      { q: "ലൂയിസ് ആസിഡ് എന്നാൽ എന്ത്?", options: ["ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കുന്നവ", "ഇലക്ട്രോൺ ജോഡിയെ നൽകുന്നവ", "പ്രോട്ടോൺ നൽകുന്നവ", "ഹൈഡ്രോക്സൈഡ് നൽകുന്നവ"], ans: 0, exp: "ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കുന്നവയാണ് ലൂയിസ് ആസിഡുകൾ[cite: 6]." },
-      { q: "pH സ്കെയിൽ ആവിഷ്കരിച്ചത് ആര്?", options: ["സോറൻസൺ", "ബോയിൽ", "ചാൾസ്", "റുഥർഫോർഡ്"], ans: 0, exp: "1909-ൽ സോറൻസൺ ആണ് ആവിഷ്കരിച്ചത്[cite: 6]." },
-      { q: "ആസിഡുകൾ സജീവ ലോഹങ്ങളുമായി പ്രവർത്തിക്കുമ്പോൾ ഏത് വാതകമാണ് പുറത്തുവിടുന്നത്?", options: ["ഹൈഡ്രജൻ", "ഓക്സിജൻ", "നൈട്രജൻ", "കാർബൺ ഡയോക്സൈഡ്"], ans: 0, exp: "ഹൈഡ്രജൻ വാതകം പുറത്തുവിടുന്നു[cite: 6]." },
-      { q: "ഹൈഡ്രജൻ ബോംബ് പ്രവർത്തിക്കുന്ന തത്വം ഏത്?", options: ["ന്യൂക്ലിയർ ഫിഷൻ", "ന്യൂക്ലിയർ ഫ്യൂഷൻ", "ഓക്സീകരണം", "രാസപ്രവർത്തനം"], ans: 1, exp: "അണുസംയോജനം അഥവാ ന്യൂക്ലിയർ ഫ്യൂഷൻ ആണ് തത്വം[cite: 6]." },
-      { q: "വാതകങ്ങളുടെ വ്യാപനവുമായി ബന്ധപ്പെട്ട നിയമം ഏത്?", options: ["ഗ്രഹാമിന്റെ നിയമം", "ബോയിലിന്റെ നിയമം", "ചാൾസിന്റെ നിയമം", "ഹെൻറിയുടെ നിയമം"], ans: 0, exp: "ഗ്രഹാമിന്റെ വ്യാപന നിയമം (Graham's Law)[cite: 6]." },
-      { q: "ജലത്തിൽ ലയിക്കുന്ന ബേസുകൾ അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["ആൽക്കലികൾ", "ലവണങ്ങൾ", "ആസിഡുകൾ", "കൊളോയിഡുകൾ"], ans: 0, exp: "ആൽക്കലികൾ എന്ന് വിളിക്കുന്നു[cite: 6]." },
-      { q: "ഷെല്ലിന്റെ വലിപ്പത്തെയും പ്രധാന ഊർജ്ജനിലയെയും സൂചിപ്പിക്കുന്ന ക്വാണ്ടം സംഖ്യ ഏത്?", options: ["പ്രിൻസിപ്പൽ ക്വാണ്ടം സംഖ്യ", "അസിമുത്തൽ ക്വാണ്ടം സംഖ്യ", "മാഗ്നറ്റിക് ക്വാണ്ടം സംഖ്യ", "സ്പിൻ ക്വാണ്ടം സംഖ്യ"], ans: 0, exp: "പ്രിൻസിപ്പൽ ക്വാണ്ടം സംഖ്യ (n)[cite: 6]." },
-      { q: "ഒരു ഓർബിറ്റലിൽ വിപരീത സ്പിന്നോടുകൂടിയ പരമാവധി എത്ര ഇലക്ട്രോണുകളെ ഉൾക്കൊള്ളാം?", options: ["2", "4", "6", "8"], ans: 0, exp: "പരമാവധി 2 ഇലക്ട്രോണുകളെ ഉൾക്കൊള്ളാം[cite: 6]." },
-      { q: "ചലിക്കുന്ന സൂക്ഷ്മ കണികകൾക്ക് ഒരേസമയം കണികാ സ്വഭാവവും തരംഗ സ്വഭാവവും ഉണ്ടായിരിക്കുമെന്ന് സമർത്ഥിച്ചത് ആര്?", options: ["ഡീബ്രോളി", "ഹൈസൻബർഗ്", "പൗളി", "ഹുണ്ട്"], ans: 0, exp: "ലൂയി ഡിബ്രോളി[cite: 6]." },
-      { q: "റേഡിയോ ആക്ടീവ് വികിരണങ്ങളിൽ ചാർജ്ജില്ലാത്ത വൈദ്യുതകാന്തിക തരംഗം ഏത്?", options: ["ഗാമാ രശ്മികൾ", "ആൽഫാ കണങ്ങൾ", "ബീറ്റാ കണങ്ങൾ", "എക്സ് റേ"], ans: 0, exp: "ഗാമാ രശ്മികൾ[cite: 6]." },
-      { q: "മെൻഡലീവ് തന്റെ പീരിയോഡിക് ടേബിൾ തയ്യാറാക്കാൻ അടിസ്ഥാനമാക്കിയത് എന്ത്?", options: ["അറ്റോമിക ഭാരം", "അറ്റോമിക നമ്പർ", "സാന്ദ്രത", "സംയോജകത"], ans: 0, exp: "അറ്റോമിക ഭാരം (Atomic Mass) അടിസ്ഥാനമാക്കിയാണ് തയ്യാറാക്കിയത്[cite: 6]." },
-      { q: "ആസിഡ് മഴയുടെ pH മൂല്യം എത്രയാണ്?", options: ["5.6-ൽ താഴെ", "7-ൽ കൂടുതൽ", "കൃത്യം 7", "10-ന് മുകളിൽ"], ans: 0, exp: "5.6-ൽ താഴെയാണ്[cite: 6]." },
-      { q: "ഒരു കിലോഗ്രാം ലായകത്തിൽ അടങ്ങിയിരിക്കുന്ന ലീനത്തിന്റെ മോളുകളുടെ എണ്ണം അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["മൊളാലിറ്റി", "മൊളാരിറ്റി", "നോർമാലിറ്റി", "മൂല്യകത്വം"], ans: 0, exp: "ഇത് മൊളാലിറ്റി (Molality) ആകുന്നു[cite: 6]." },
-      { q: "ഒരേ അറ്റോമിക നമ്പറും വ്യത്യസ്ത മാസ് നമ്പറുമുള്ള ഒരേ മൂലകത്തിന്റെ ആറ്റങ്ങൾ അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["ഐസോടോപ്പുകൾ", "ഐസോബാറുകൾ", "ഐസോടോണുകൾ", "ഐസോമേറുകൾ"], ans: 0, exp: "ഐസോടോപ്പുകൾ (Isotopes)[cite: 6]." },
-      { q: "ജലം ഏത് തരം ലായകത്തിന് ഉദാഹരണമാണ്?", options: ["സാർവ്വത്രിക അകാർബണിക ലായകം", "ജൈവ ലായകം", "ഓർഗാനിക് ലായകം", "അമ്ല ലായകം"], ans: 0, exp: "സാർവ്വത്രിക അകാർബണിക ലായകം (Universal solvent)[cite: 6]." },
-      { q: "f-ബ്ലോക്ക് മൂലകങ്ങൾ അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["ലാന്തനോയിഡുകളും ആക്ടിനോയിഡുകളും", "സംക്രമണ മൂലകങ്ങൾ", "ആൽക്കലി ലോഹങ്ങൾ", "ഉത്കൃഷ്ട വാതകങ്ങൾ"], ans: 0, exp: "ലാന്തനോയിഡുകളും ആക്ടിനോയിഡുകളും[cite: 6]." },
-      { q: "മനുഷ്യരക്തത്തിന്റെ സ്വാഭാവിക pH മൂല്യം ഏകദേശം എത്രയാണ്?", options: ["7.4", "6.0", "8.5", "5.0"], ans: 0, exp: "ഏകദേശം 7.4 ആണ്[cite: 6]." },
-      { q: "കാർബൺ മോണോക്സൈഡും ഹൈഡ്രജനും ചേർന്ന മിശ്രിതം ഏതാണ്?", options: ["വാട്ടർ ഗ്യാസ്", "പ്രൊഡ്യൂസർ ഗ്യാസ്", "ഗോബർ ഗ്യാസ്", "നാച്ചുറൽ ഗ്യാസ്"], ans: 0, exp: "വാട്ടർ ഗ്യാസ് (CO + H2)[cite: 6]." },
-      { q: "പ്രഷർ കുക്കറിനുള്ളിൽ ഉയർന്ന മർദ്ദമുള്ളതിനാൽ ജലത്തിന്റെ തിളനില എന്ത് സംഭവിക്കുന്നു?", options: ["വർദ്ധിക്കുന്നു", "കുറയുന്നു", "മാറ്റമില്ല", "പൂജ്യമാകുന്നു"], ans: 0, exp: "തിളനില വർദ്ധിക്കുന്നു[cite: 6]." },
-      { q: "മൂലകങ്ങളുടെ രാസസ്വഭാവങ്ങളെയും സംയോജകതയെയും പ്രധാനമായും നിർണ്ണയിക്കുന്നത് എന്ത്?", options: ["ആറ്റത്തിന്റെ ഇലക്ട്രോൺ വിന്യാസം", "ന്യൂക്ലിയസിന്റെ ഭാരം", "പ്രോട്ടോണുകളുടെ എണ്ണം", "ന്യൂട്രോണുകളുടെ എണ്ണം"], ans: 0, exp: "ഇലക്ട്രോൺ വിന്യാസമാണ് നിർണ്ണയിക്കുന്നത്[cite: 6]." }
+      { q: "ആറ്റത്തെ പോസിറ്റീവ് ചാർജ്ജുള്ള ഗോളമായും ഇലക്ട്രോണുകളെ അതിൽ പതിഞ്ഞുകിടക്കുന്നതായും വിഭാവനം ചെയ്ത 'പ്ലം പുഡ്ഡിംഗ് മോഡൽ' ആവിഷ്കരിച്ചത് ആര്?", options: ["ജോൺ ഡാൽട്ടൺ", "ജെ.ജെ. തോംസൺ", "ഏണസ്റ്റ് റൂഥർഫോർഡ്", "നീൽസ് ബോർ"], ans: 1, exp: "1897-ൽ ഇലക്ട്രോൺ കണ്ടെത്തിയ ജെ.ജെ. തോംസൺ ആണ് പ്ലം പുഡ്ഡിംഗ് മോഡൽ അവതരിപ്പിച്ചത്[cite: 3]." },
+      { q: "സ്വർണ്ണത്തകിട് ആൽഫാ കണ പരീക്ഷണത്തിലൂടെ ആറ്റത്തിന് ഒരു പോസിറ്റീവ് ന്യൂക്ലിയസ് ഉണ്ടെന്ന് കണ്ടെത്തിയത് ആര്?", options: ["നീൽസ് ബോർ", "ജെയിംസ് ചാഡ്വിക്", "ഏണസ്റ്റ് റൂഥർഫോർഡ്", "മാക്സ് പ്ലാങ്ക്"], ans: 2, exp: "1911-ൽ റൂഥർഫോർഡ് നടത്തിയ ആൽഫാ കണ വിസരണ പരീക്ഷണമാണിത്[cite: 3]." },
+      { q: "ആറ്റത്തിലെ ഇലക്ട്രോണുകൾ ന്യൂക്ലിയസിന് ചുറ്റും നിശ്ചിത ഊർജ്ജമുള്ള വൃത്താകാര പാതകളിൽ (ഓർബിറ്റുകൾ) കറങ്ങുന്നു എന്ന ആറ്റം മാതൃക മുന്നോട്ടുവെച്ചത് ആര്?", options: ["റൂഥർഫോർഡ്", "നീൽസ് ബോർ", "ജെ.ജെ. തോംസൺ", "ലൂയി ഡിബ്രോളി"], ans: 1, exp: "1913-ൽ നീൽസ് ബോറാണ് ഊർജ്ജ നിലകൾ അടങ്ങിയ ആറ്റം മാതൃക അവതരിപ്പിച്ചത്[cite: 3]." },
+      { q: "ആധുനിക പീരിയോഡിക് ടേബിളിൽ മൂലകങ്ങളെ അവയുടെ ഏത് ക്രമത്തിലാണ് ക്രമീകരിച്ചിരിക്കുന്നത്?", options: ["അറ്റോമിക മാസ് വർദ്ധിക്കുന്ന ക്രമത്തിൽ", "അറ്റോമിക നമ്പർ വർദ്ധിക്കുന്ന ക്രമത്തിൽ", "അയോണീകരണ ഊർജ്ജം കുറയുന്ന ക്രമത്തിൽ", "സാന്ദ്രത വർദ്ധിക്കുന്ന ക്രമത്തിൽ"], ans: 1, exp: "ഹെൻറി മോസ്ലിയുടെ ആധുനിക നിയമപ്രകാരം അറ്റോമിക നമ്പറുകളുടെ ആവർത്തന ഫലമായാണ് ക്രമീകരിച്ചിരിക്കുന്നത്[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിൽ ഒരു പിരീഡിൽ ഇടത്തുനിന്ന് വലത്തോട്ട് നീങ്ങുമ്പോൾ അറ്റോമിക ആരം സാധാരണയായി എങ്ങനെ വ്യത്യാസപ്പെടുന്നു?", options: ["ക്രമമായി വർദ്ധിക്കുന്നു", "ക്രമമായി കുറയുന്നു", "മാറ്റമില്ലാതെ തുടരുന്നു", "ആദ്യം കുറഞ്ഞ് പിന്നീട് കൂടുന്നു"], ans: 1, exp: "ന്യൂക്ലിയർ ചാർജ്ജ് വർദ്ധിക്കുന്നതിനാൽ പിരീഡിൽ ഇടത്തുനിന്ന് വലത്തോട്ട് അറ്റോമിക ആരം കുറയുന്നു[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ അയോണീകരണ എന്താൽപ്പി ഉള്ള മൂലകം ഏതാണ്?", options: ["ഫ്ലൂറിൻ", "ഹൈഡ്രജൻ", "ഹീലിയം", "സീസിയം"], ans: 2, exp: "സ്ഥിരതയുള്ള ഇരട്ട ഇലക്ട്രോൺ വിന്യാസമുള്ള ഹീലിയത്തിനാണ് ഏറ്റവും ഉയർന്ന അയോണീകരണ ഊർജ്ജമുള്ളത്[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കുറഞ്ഞ അയോണീകരണ എന്താൽപ്പിയുള്ള മൂലകം ഏത്?", options: ["ലിഥിയം", "ഫ്രാൻസിയം", "സീസിയം", "പൊട്ടാസ്യം"], ans: 2, exp: "റേഡിയോ ആക്ടീവല്ലാത്ത മൂലകങ്ങളിൽ സീസിയത്തിന് ഏറ്റവും കുറഞ്ഞ അയോണീകരണ എന്താൽപ്പിയാണുള്ളത്[cite: 3]." },
+      { q: "പോളിംഗ് സ്കെയിൽ പ്രകാരം പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ ഇലക്ട്രോനെഗറ്റിവിറ്റി ഉള്ള മൂലകം ഏതാണ്?", options: ["ക്ലോറിൻ", "ഓക്സിജൻ", "ഫ്ലൂറിൻ", "നൈട്രജൻ"], ans: 2, exp: "ഇലക്ട്രോനെഗറ്റിവിറ്റി ഏറ്റവും കൂടുതൽ ഫ്ലൂറിനാണ് (4.0)[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ ഇലക്ട്രോൺ അഫിനിറ്റി പ്രകടിപ്പിക്കുന്ന മൂലകം ഏതാണ്?", options: ["ഫ്ലൂറിൻ", "ക്ലോറിൻ", "ബ്രോമിൻ", "അയോഡിൻ"], ans: 1, exp: "ഫ്ലൂറിനേക്കാൾ ഉയർന്ന ഇലക്ട്രോൺ സ്വീകരണ എന്താൽപ്പി ക്ലോറിനാണ്[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിലെ 18-ാം ഗ്രൂപ്പ് മൂലകങ്ങൾ ഏത് ബ്ലോക്കിലാണ് ഉൾപ്പെടുന്നത്?", options: ["s-ബ്ലോക്ക്", "p-ബ്ലോക്ക്", "d-ബ്ലോക്ക്", "f-ബ്ലോക്ക്"], ans: 1, exp: "ഉത്കൃഷ്ട വാതകങ്ങൾ p-ബ്ലോക്കിലാണ് ഉൾപ്പെടുന്നത്[cite: 3]." },
+      { q: "സംക്രമണ മൂലകങ്ങൾ പീരിയോഡിക് ടേബിളിലെ ഏത് ബ്ലോക്കിലാണ് ഉൾപ്പെടുന്നത്?", options: ["s-ബ്ലോക്ക്", "p-ബ്ലോക്ക്", "d-ബ്ലോക്ക്", "f-ബ്ലോക്ക്"], ans: 2, exp: "3 മുതൽ 12 വരെയുള്ള ഗ്രൂപ്പുകളിലെ മൂലകങ്ങളാണ് d-ബ്ലോക്ക് അഥവാ സംക്രമണ മൂലകങ്ങൾ[cite: 3]." },
+      { q: "ഒരു നിശ്ചിത താപനിലയിൽ കൂടുതൽ ലീനം ലയിച്ചുചേരാൻ സാധിക്കാത്ത വിധം പരമാവധി ലീനം അടങ്ങിയിരിക്കുന്ന ലായനി ഏത്?", options: ["അപൂരിത ലായനി", "പൂരിത ലായനി", "അതിപൂരിത ലായനി", "നേർപ്പിച്ച ലായനി"], ans: 1, exp: "ഇത് പൂരിത ലായനി (Saturated Solution) എന്നറിയപ്പെടുന്നു[cite: 3]." },
+      { q: "ദ്രാവക ലായകത്തിൽ ഒരു വാതക ലീനത്തിന്റെ ലേയത്വം മർദ്ദത്തിന് നേർ അനുപാതത്തിലായിരിക്കും എന്ന് വ്യക്തമാക്കുന്ന നിയമം ഏത്?", options: ["ബോയിൽ നിയമം", "ഹെൻറി നിയമം", "ചാൾസ് നിയമം", "റൗൾട്ട് നിയമം"], ans: 1, exp: "ഇത് ഹെൻറി നിയമം ആകുന്നു[cite: 3]." },
+      { q: "കൊളോയിഡൽ കണികകളിലൂടെ പ്രകാശകിരണങ്ങൾ കടന്നുപോകുമ്പോൾ പ്രകാശപാത ദൃശ്യമാകുന്ന പ്രതിഭാസം ഏത്?", options: ["ബ്രൗണിയൻ ചലനം", "ടിൻഡൽ പ്രഭാവം", "ഇലക്ട്രോഫോറെസിസ്", "ഡയാലിസിസ്"], ans: 1, exp: "പ്രകാശ വിസരണ പ്രതിഭാസമായ ടിൻഡൽ പ്രഭാവം[cite: 3]." },
+      { q: "ഒരു കൊളോയിഡൽ ലായനിയിൽ കണികകൾ നടത്തുന്ന ക്രമരഹിത ചലനത്തിന് പറയുന്ന പേരെന്ത്?", options: ["ടിൻഡൽ ചലനം", "ബ്രൗണിയൻ ചലനം", "അയോണീകരണം", "സബ്ളിമേഷൻ"], ans: 1, exp: "ഇത് ബ്രൗണിയൻ മൂവ്മെന്റ് ആകുന്നു[cite: 3]." },
+      { q: "പാൽ ഏത് തരം കൊളോയിഡിന് ഉദാഹരണമാണ്?", options: ["എമൽഷൻ", "എയറോസോൾ", "ഫോം", "സോൾ"], ans: 0, exp: "പാൽ ഒരു എമൽഷൻ ആണ്[cite: 3]." },
+      { q: "ജലത്തിൽ ലയിപ്പിക്കുമ്പോൾ ഹൈഡ്രോണിയം അയോണുകൾ നൽകുന്ന പദാർത്ഥങ്ങൾ ഏവ?", options: ["അർഹീനിയസ് സിദ്ധാന്തപ്രകാരം ആസിഡുകൾ", "ബ്രോൺസ്റ്റഡ്-ലോറി ബേസുകൾ", "ലൂയിസ് ആസിഡുകൾ", "ഇവയെല്ലാം"], ans: 0, exp: "അർഹീനിയസ് സിദ്ധാന്തപ്രകാരം H+ അയോണുകൾ നൽകുന്നവ ആസിഡുകളാണ്[cite: 3]." },
+      { q: "ബ്രോൺസ്റ്റഡ്-ലോറി സിദ്ധാന്ത പ്രകാരം ഒരു 'പ്രോട്ടോൺ ദാതാവ്' ആയി വർത്തിക്കുന്ന പദാർത്ഥം ഏതാണ്?", options: ["ബേസ്", "ആസിഡ്", "ലവണം", "ഇലക്ട്രോലൈറ്റ്"], ans: 1, exp: "പ്രോട്ടോൺ നൽകുന്നവ ആസിഡുകളാണ്[cite: 3]." },
+      { q: "ഒരു രാസപ്രവർത്തനത്തിൽ ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കാൻ കഴിവുള്ള പദാർത്ഥങ്ങളെ എന്ത് വിളിക്കുന്നു?", options: ["ലൂയിസ് ബേസ്", "ലൂയിസ് ആസിഡ്", "ന്യൂട്രൽ ലായനി", "ആൽക്കലി"], ans: 1, exp: "ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കുന്നവ ലൂയിസ് ആസിഡുകളാണ്[cite: 3]." },
+      { q: "ആസിഡും ആൽക്കലിയും തമ്മിൽ പ്രവർത്തിച്ച് ലവണവും ജലവും ഉണ്ടാകുന്ന പ്രവർത്തനം ഏത്?", options: ["അപഗ്രഥനം", "ശമനീകരണം", "ഓക്സീകരണം", "റിഡക്ഷൻ"], ans: 1, exp: "ഇത് ശമനീകരണം (Neutralisation) ആകുന്നു[cite: 3]." },
+      { q: "റൂഥർഫോർഡിന്റെ ആറ്റം മാതൃകയെക്കുറിച്ചുള്ള ശരിയായ പ്രസ്താവന ഏത്?", options: ["ആറ്റത്തിന്റെ കേന്ദ്രത്തിൽ പോസിറ്റീവ് ന്യൂക്ലിയസ് ഉണ്ട്", "ആറ്റത്തിന്റെ സ്ഥിരത തെളിയിച്ചു", "ഊർജ്ജ നിലകൾ വിശദീകരിച്ചു", "ഇവയെല്ലാം"], ans: 0, exp: "1 മാത്രം ശരിയാണ് (കേന്ദ്രത്തിൽ ന്യൂക്ലിയസ് ഉണ്ട്)[cite: 3]." },
+      { q: "നീൽസ് ബോറിന്റെ ആറ്റം സിദ്ധാന്ത പ്രകാരം ഏതാണ് ശരി?", options: ["ഓർബിറ്റിൽ കറങ്ങുമ്പോൾ ഊർജ്ജ നഷ്ടമില്ല", "ഏത് പാതയിലൂടെയും കറങ്ങാം", "ഊർജ്ജം വികിരണം ചെയ്യുന്നത് തുടർച്ചയാണ്", "ഇവയെല്ലാം"], ans: 0, exp: "ഊർജ്ജ നഷ്ടമില്ലാതെ നിശ്ചിത ഓർബിറ്റുകളിൽ കറങ്ങുന്നു[cite: 3]." },
+      { q: "ആധുനിക പീരിയോഡിക് ടേബിളിൽ ആകെ എത്ര പിരീഡുകളും ഗ്രൂപ്പുകളുമാണുള്ളത്?", options: ["7 പിരീഡുകൾ, 18 ഗ്രൂപ്പുകൾ", "8 പിരീഡുകൾ, 16 ഗ്രൂപ്പുകൾ", "6 പിരീഡുകൾ, 10 ഗ്രൂപ്പുകൾ", "7 പിരീഡുകൾ, 10 ഗ്രൂപ്പുകൾ"], ans: 0, exp: "7 പിരീഡുകളും 18 ഗ്രൂപ്പുകളുമാണുള്ളത്[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിൽ ഗ്രൂപ്പിൽ താഴേക്ക് പോകുന്തോറും അറ്റോമിക ആരം എന്ത് സംഭവിക്കുന്നു?", options: ["കുറയുന്നു", "വർദ്ധിക്കുന്നു", "മാറ്റമില്ല", "ആദ്യം കൂടി കുറയുന്നു"], ans: 1, exp: "പുതിയ ഷെല്ലുകൾ ചേരുന്നതിനാൽ ആരം വർദ്ധിക്കുന്നു[cite: 3]." },
+      { q: "അയോണീകരണ എന്താൽപ്പിയെ സ്വാധീനിക്കുന്ന ഘടകം ഏത്?", options: ["അറ്റോമിക ആരം", "ന്യൂക്ലിയർ ചാർജ്ജ്", "ഓർബിറ്റൽ സ്ഥിരത", "ഇവയെല്ലാം"], ans: 3, exp: "ഇവയെല്ലാം അയോണീകരണ എന്താൽപ്പിയെ സ്വാധീനിക്കുന്നു[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിൽ ഏറ്റവും കൂടുതൽ ഇലക്ട്രോനെഗറ്റിവിറ്റിയുള്ള മൂലകം ഏത്?", options: ["ഫ്ലൂറിൻ", "ക്ലോറിൻ", "ഓക്സിജൻ", "നൈട്രജൻ"], ans: 0, exp: "ഫ്ലൂറിനാണ് ഏറ്റവും കൂടുതൽ ഇലക്ട്രോനെഗറ്റിവിറ്റിയുള്ളത്[cite: 3]." },
+      { q: "പീരിയോഡിക് ടേബിളിൽ ഗ്രൂപ്പിൽ താഴേക്ക് പോകുന്തോറും ലോഹസ്വഭാവം എന്ത് സംഭവിക്കുന്നു?", options: ["കുറയുന്നു", "വർദ്ധിക്കുന്നു", "മാറ്റമില്ല", "ശൂന്യമാകുന്നു"], ans: 1, exp: "ലോഹസ്വഭാവം വർദ്ധിക്കുന്നു[cite: 3]." },
+      { q: "യഥാർത്ഥ ലായനിയുടെ കണികകളുടെ വലിപ്പം എത്രയാണ്?", options: ["1 നാനോമീറ്ററിൽ താഴെ", "1 നാനോമീറ്ററിനും 1000 നാനോമീറ്ററിനും ഇടയിൽ", "1000 നാനോമീറ്ററിന് മുകളിൽ", "കണികകൾ കാണാം"], ans: 0, exp: "1 നാനോമീറ്ററിൽ താഴെയാണ് വലിപ്പം[cite: 3]." },
+      { q: "താപനില വർദ്ധിക്കുമ്പോൾ ഖര ലീനങ്ങളുടെ ലേയത്വം എന്ത് സംഭവിക്കുന്നു?", options: ["വർദ്ധിക്കുന്നു", "കുറയുന്നു", "മാറ്റമില്ല", "പൂജ്യമാകുന്നു"], ans: 0, exp: "ഭൂരിഭാഗം ഖര ലീനങ്ങളുടെയും ലേയത്വം വർദ്ധിക്കുന്നു[cite: 3]." },
+      { q: "സസ്പെൻഷനിലെ കണികകളുടെ സവിശേഷത എന്താണ്?", options: ["അടിഞ്ഞുകൂടുന്നു", "തങ്ങിനിൽക്കുന്നു", "ലയിക്കുന്നു", "പ്രകാശത്തെ കടത്തിവിടുന്നു"], ans: 0, exp: "ഗുരുത്വാകർഷണം മൂലം അടിഞ്ഞുകൂടുന്നു[cite: 3]." },
+      { q: "ലൂയിസ് ആസിഡ് എന്നാൽ എന്ത്?", options: ["ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കുന്നവ", "ഇലക്ട്രോൺ ജോഡിയെ നൽകുന്നവ", "പ്രോട്ടോൺ നൽകുന്നവ", "ഹൈഡ്രോക്സൈഡ് നൽകുന്നവ"], ans: 0, exp: "ഇലക്ട്രോൺ ജോഡിയെ സ്വീകരിക്കുന്നവയാണ് ലൂയിസ് ആസിഡുകൾ[cite: 3]." },
+      { q: "pH സ്കെയിൽ ആവിഷ്കരിച്ചത് ആര്?", options: ["സോറൻസൺ", "ബോയിൽ", "ചാൾസ്", "റുഥർഫോർഡ്"], ans: 0, exp: "1909-ൽ സോറൻസൺ ആണ് ആവിഷ്കരിച്ചത്[cite: 3]." },
+      { q: "ആസിഡുകൾ സജീവ ലോഹങ്ങളുമായി പ്രവർത്തിക്കുമ്പോൾ ഏത് വാതകമാണ് പുറത്തുവിടുന്നത്?", options: ["ഹൈഡ്രജൻ", "ഓക്സിജൻ", "നൈട്രജൻ", "കാർബൺ ഡയോക്സൈഡ്"], ans: 0, exp: "ഹൈഡ്രജൻ വാതകം പുറത്തുവിടുന്നു[cite: 3]." },
+      { q: "ഹൈഡ്രജൻ ബോംബ് പ്രവർത്തിക്കുന്ന തത്വം ഏത്?", options: ["ന്യൂക്ലിയർ ഫിഷൻ", "ന്യൂക്ലിയർ ഫ്യൂഷൻ", "ഓക്സീകരണം", "രാസപ്രവർത്തനം"], ans: 1, exp: "അണുസംയോജനം അഥവാ ന്യൂക്ലിയർ ഫ്യൂഷൻ ആണ് തത്വം[cite: 3]." },
+      { q: "വാതകങ്ങളുടെ വ്യാപനവുമായി ബന്ധപ്പെട്ട നിയമം ഏത്?", options: ["ഗ്രഹാമിന്റെ നിയമം", "ബോയിലിന്റെ നിയമം", "ചാൾസിന്റെ നിയമം", "ഹെൻറിയുടെ നിയമം"], ans: 0, exp: "ഗ്രഹാമിന്റെ വ്യാപന നിയമം[cite: 3]." },
+      { q: "ജലത്തിൽ ലയിക്കുന്ന ബേസുകൾ അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["ആൽക്കലികൾ", "ലവണങ്ങൾ", "ആസിഡുകൾ", "കൊളോയിഡുകൾ"], ans: 0, exp: "ആൽക്കലികൾ എന്ന് വിളിക്കുന്നു[cite: 3]." },
+      { q: "ഷെല്ലിന്റെ വലിപ്പത്തെയും പ്രധാന ഊർജ്ജനിലയെയും സൂചിപ്പിക്കുന്ന ക്വാണ്ടം സംഖ്യ ഏത്?", options: ["പ്രിൻസിപ്പൽ ക്വാണ്ടം സംഖ്യ", "അസിമുത്തൽ ക്വാണ്ടം സംഖ്യ", "മാഗ്നറ്റിക് ക്വാണ്ടം സംഖ്യ", "സ്പിൻ ക്വാണ്ടം സംഖ്യ"], ans: 0, exp: "പ്രിൻസിപ്പൽ ക്വാണ്ടം സംഖ്യ (n)[cite: 3]." },
+      { q: "ഒരു ഓർബിറ്റലിൽ വിപരീത സ്പിന്നോടുകൂടിയ പരമാവധി എത്ര ഇലക്ട്രോണുകളെ ഉൾക്കൊള്ളാം?", options: ["2", "4", "6", "8"], ans: 0, exp: "പരമാവധി 2 ഇലക്ട്രോണുകളെ ഉൾക്കൊള്ളാം[cite: 3]." },
+      { q: "ചലിക്കുന്ന സൂക്ഷ്മ കണികകൾക്ക് ഒരേസമയം കണികാ സ്വഭാവവും തരംഗ സ്വഭാവവും ഉണ്ടായിരിക്കുമെന്ന് സമർത്ഥിച്ചത് ആര്?", options: ["ഡീബ്രോളി", "ഹൈസൻബർഗ്", "പൗളി", "ഹുണ്ട്"], ans: 0, exp: "ലൂയി ഡിബ്രോളി[cite: 3]." },
+      { q: "റേഡിയോ ആക്ടീവ് വികിരണങ്ങളിൽ ചാർജ്ജില്ലാത്ത വൈദ്യുതകാന്തിക തരംഗം ഏത്?", options: ["ഗാമാ രശ്മികൾ", "ആൽഫാ കണങ്ങൾ", "ബീറ്റാ കണങ്ങൾ", "എക്സ് റേ"], ans: 0, exp: "ഗാമാ രശ്മികൾ[cite: 3]." },
+      { q: "മെൻഡലീവ് തന്റെ പീരിയോഡിക് ടേബിൾ തയ്യാറാക്കാൻ അടിസ്ഥാനമാക്കിയത് എന്ത്?", options: ["അറ്റോമിക ഭാരം", "അറ്റോമിക നമ്പർ", "സാന്ദ്രത", "സംയോജകത"], ans: 0, exp: "അറ്റോമിക ഭാരം അടിസ്ഥാനമാക്കിയാണ് തയ്യാറാക്കിയത്[cite: 3]." },
+      { q: "ആസിഡ് മഴയുടെ pH മൂല്യം എത്രയാണ്?", options: ["5.6-ൽ താഴെ", "7-ൽ കൂടുതൽ", "കൃത്യം 7", "10-ന് മുകളിൽ"], ans: 0, exp: "5.6-ൽ താഴെയാണ്[cite: 3]." },
+      { q: "ഒരു കിലോഗ്രാം ലായകത്തിൽ അടങ്ങിയിരിക്കുന്ന ലീനത്തിന്റെ മോളുകളുടെ എണ്ണം അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["മൊളാലിറ്റി", "മൊളാരിറ്റി", "നോർമാലിറ്റി", "മൂല്യകത്വം"], ans: 0, exp: "ഇത് മൊളാലിറ്റി (Molality) ആകുന്നു[cite: 3]." },
+      { q: "ഒരേ അറ്റോമിക നമ്പറും വ്യത്യസ്ത മാസ് നമ്പറുമുള്ള ഒരേ മൂലകത്തിന്റെ ആറ്റങ്ങൾ അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["ഐസോടോപ്പുകൾ", "ഐസോബാറുകൾ", "ഐസോടോണുകൾ", "ഐസോമേറുകൾ"], ans: 0, exp: "ഐസോടോപ്പുകൾ[cite: 3]." },
+      { q: "ജലം ഏത് തരം ലായകത്തിന് ഉദാഹരണമാണ്?", options: ["സാർവ്വത്രിക അകാർബണിക ലായകം", "ജൈവ ലായകം", "ഓർഗാനിക് ലായകം", "അമ്ല ലായകം"], ans: 0, exp: "സാർവ്വത്രിക അകാർബണിക ലായകം[cite: 3]." },
+      { q: "f-ബ്ലോക്ക് മൂലകങ്ങൾ അറിയപ്പെടുന്നത് എങ്ങനെ?", options: ["ലാന്തനോയിഡുകളും ആക്ടിനോയിഡുകളും", "സംക്രമണ മൂലകങ്ങൾ", "ആൽക്കലി ലോഹങ്ങൾ", "ഉത്കൃഷ്ട വാതകങ്ങൾ"], ans: 0, exp: "ലാന്തനോയിഡുകളും ആക്ടിനോയിഡുകളും[cite: 3]." },
+      { q: "മനുഷ്യരക്തത്തിന്റെ സ്വാഭാവിക pH മൂല്യം ഏകദേശം എത്രയാണ്?", options: ["7.4", "6.0", "8.5", "5.0"], ans: 0, exp: "ഏകദേശം 7.4 ആണ്[cite: 3]." },
+      { q: "കാർബൺ മോണോക്സൈഡും ഹൈഡ്രജനും ചേർന്ന മിശ്രിതം ഏതാണ്?", options: ["വാട്ടർ ഗ്യാസ്", "പ്രൊഡ്യൂസർ ഗ്യാസ്", "ഗോബർ ഗ്യാസ്", "നാച്ചുറൽ ഗ്യാസ്"], ans: 0, exp: "വാട്ടർ ഗ്യാസ് (CO + H2)[cite: 3]." },
+      { q: "പ്രഷർ കുക്കറിനുള്ളിൽ ഉയർന്ന മർദ്ദമുള്ളതിനാൽ ജലത്തിന്റെ തിളനില എന്ത് സംഭവിക്കുന്നു?", options: ["വർദ്ധിക്കുന്നു", "കുറയുന്നു", "മാറ്റമില്ല", "പൂജ്യമാകുന്നു"], ans: 0, exp: "തിളനില വർദ്ധിക്കുന്നു[cite: 3]." },
+      { q: "മൂലകങ്ങളുടെ രാസസ്വഭാവങ്ങളെയും സംയോജകതയെയും പ്രധാനമായും നിർണ്ണയിക്കുന്നത് എന്ത്?", options: ["ആറ്റത്തിന്റെ ഇലക്ട്രോൺ വിന്യാസം", "ന്യൂക്ലിയസിന്റെ ഭാരം", "പ്രോട്ടോണുകളുടെ എണ്ണം", "ന്യൂട്രോണുകളുടെ എണ്ണം"], ans: 0, exp: "ഇലക്ട്രോൺ വിന്യാസമാണ് നിർണ്ണയിക്കുന്നത്[cite: 3]." }
     ];
 
-    let currentUser = { name: "പരീക്ഷാർത്ഥി", phone: "0000000000" };
-    let currentIndex = 0;[cite: 6]
-    let userAnswers = new Array(questionsData.length).fill(null);[cite: 6]
-    let timeLeft = 50 * 60;[cite: 6]
-    let timerInterval = null;[cite: 6]
+    let candidateName = "പരീക്ഷാർത്ഥി";
+    let candidatePhone = "0000000000";
+    let examTitle = "രസതന്ത്രം - മോഡൽ എക്സാം";
+    let currentIndex = 0;
+    let userAnswers = new Array(questionsData.length).fill(null);
+    let timeLeft = 50 * 60;
+    let timerInterval = null;
 
-    // 🌟 പേജ് ലോഡ് ആകുന്ന നിമിഷം യാതൊരു തടസ്സവുമില്ലാതെ ചോദ്യങ്ങളും ടൈമറും സ്റ്റാർട്ട് ആകും
     window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const passedName = urlParams.get('name');
-      const passedPhone = urlParams.get('phone');
-      const passedTitle = urlParams.get('title');
-      const passedSheet = urlParams.get('sheetUrl');
-      const passedPdf = urlParams.get('pdfUrl');
+      if (urlParams.get('name')) candidateName = decodeURIComponent(urlParams.get('name'));
+      if (urlParams.get('phone')) candidatePhone = decodeURIComponent(urlParams.get('phone'));
+      if (urlParams.get('title')) examTitle = decodeURIComponent(urlParams.get('title'));
 
-      if (passedName) currentUser.name = decodeURIComponent(passedName);
-      if (passedPhone) currentUser.phone = decodeURIComponent(passedPhone);
-      if (passedTitle) {
-        examTitle = decodeURIComponent(passedTitle);
-        document.getElementById('headerExamTitle').innerText = examTitle;
-        document.getElementById('solutionsTitleDisplay').innerText = `${examTitle} - സമഗ്ര ഉത്തര സൂചിക`;
-      }
-      if (passedSheet) GOOGLE_SHEET_WEBAPP_URL = decodeURIComponent(passedSheet);
-      if (passedPdf) ORIGINAL_PDF_URL = decodeURIComponent(passedPdf);
-
-      document.getElementById('displayUser').innerText = `${currentUser.name} (+91 ${currentUser.phone})`;
-
-      // ചോദ്യങ്ങളും ബോർഡും ടൈമറും തനിയെ ലോഡ് ആകുന്നു
-      buildPalette();
+      document.getElementById('displayUser').innerText = `${candidateName}`;
       renderQuestion(0);
       startTimer();
     });
 
-    function returnToHomeWithData() {
-      const homePortalUrl = "https://subhash-kumar00.github.io/PSC-EXAMS/";
-      const score = document.getElementById('finalScore').innerText;
-      const correct = document.getElementById('correctCount').innerText;
-      const wrong = document.getElementById('wrongCount').innerText;
-      const skipped = document.getElementById('skipCount').innerText;
-
-      window.location.href = `${homePortalUrl}?completed=true&title=${encodeURIComponent(examTitle)}&score=${score}&correct=${correct}&wrong=${wrong}&skipped=${skipped}`;
-    }
-
     function startTimer() {
-      const timerDisplay = document.getElementById('examTimer');[cite: 6]
+      const timerDisplay = document.getElementById('examTimer');
       timerInterval = setInterval(() => {
         if (timeLeft <= 0) {
-          clearInterval(timerInterval);[cite: 6]
-          alert('അനുവദിച്ച 50 മിനിറ്റ് സമയം പൂർത്തിയായിരിക്കുന്നു! പരീക്ഷ തനിയെ സബ്മിറ്റ് ചെയ്യുന്നു.');[cite: 6]
-          finishExam();[cite: 6]
-          return;[cite: 6]
+          clearInterval(timerInterval);
+          alert('അനുവദിച്ച 50 മിനിറ്റ് സമയം പൂർത്തിയായിരിക്കുന്നു!');
+          finishExam();
+          return;
         }
-
-        timeLeft--;[cite: 6]
-        const minutes = Math.floor(timeLeft / 60);[cite: 6]
-        const seconds = timeLeft % 60;[cite: 6]
-        timerDisplay.innerText = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;[cite: 6]
-
-        if (timeLeft <= 300) {
-          timerDisplay.classList.remove('text-violet-400');[cite: 6]
-          timerDisplay.classList.add('text-rose-500', 'animate-pulse');[cite: 6]
-        }
-      }, 1000);[cite: 6]
+        timeLeft--;
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        timerDisplay.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+      }, 1000);
     }
 
     function renderQuestion(index) {
-      const q = questionsData[index];[cite: 6]
-      document.getElementById('questionBadge').innerText = `ചോദ്യം ${index + 1} / ${questionsData.length}`;[cite: 6]
-      document.getElementById('qText').innerText = `${index + 1}. ${q.q}`;[cite: 6]
+      const q = questionsData[index];
+      document.getElementById('questionBadge').innerText = `ചോദ്യം ${index + 1} / ${questionsData.length}`;
+      document.getElementById('qText').innerText = `${index + 1}. ${q.q}`;
 
-      const optionsDiv = document.getElementById('optionsContainer');[cite: 6]
-      optionsDiv.innerHTML = '';[cite: 6]
-      const letters = ['A', 'B', 'C', 'D'];[cite: 6]
+      const optionsDiv = document.getElementById('optionsContainer');
+      optionsDiv.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
 
       q.options.forEach((opt, idx) => {
-        const isSelected = userAnswers[index] === idx;[cite: 6]
-        const btn = document.createElement('button');[cite: 6]
-        btn.type = 'button';[cite: 6]
+        const isSelected = userAnswers[index] === idx;
+        const btn = document.createElement('button');
+        btn.type = 'button';
         btn.className = `w-full text-left p-4 rounded-xl border transition flex items-start space-x-3 ${
-          isSelected 
-            ? 'bg-violet-500/20 border-violet-500 text-violet-200 ring-1 ring-violet-500' 
-            : 'bg-slate-900/60 border-slate-700 hover:bg-slate-700/50 text-slate-200'
-        }`;[cite: 6]
-        btn.innerHTML = `
-          <span class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
-            isSelected ? 'bg-violet-500 text-white font-black' : 'bg-slate-800 text-slate-400'
-          }">${letters[idx]}</span>
-          <span class="text-sm sm:text-base leading-relaxed mt-0.5">${opt}</span>
-        `;[cite: 6]
+          isSelected ? 'bg-violet-500/20 border-violet-500 text-violet-200' : 'bg-slate-900/60 border-slate-700 text-slate-200'
+        }`;
+        btn.innerHTML = `<span class="font-bold">${letters[idx]})</span> <span>${opt}</span>`;
         btn.onclick = () => {
-          userAnswers[index] = idx;[cite: 6]
-          renderQuestion(index);[cite: 6]
+          userAnswers[index] = idx;
+          renderQuestion(index);
         };
-        optionsDiv.appendChild(btn);[cite: 6]
+        optionsDiv.appendChild(btn);
       });
 
-      document.getElementById('prevBtn').disabled = (index === 0);[cite: 6]
-      document.getElementById('nextBtn').innerText = (index === questionsData.length - 1) ? "സബ്മിറ്റ് ചെയ്യുക ✓" : "Next ›";[cite: 6]
-      const answered = userAnswers.filter(a => a !== null).length;[cite: 6]
-      document.getElementById('answeredCountTxt').innerText = `പൂർത്തിയാക്കിയത്: ${answered}/${questionsData.length}`;[cite: 6]
-      updatePalette();[cite: 6]
-    }
-
-    function buildPalette() {
-      const pal = document.getElementById('paletteContainer');[cite: 6]
-      pal.innerHTML = '';[cite: 6]
-      for (let i = 0; i < questionsData.length; i++) {
-        const b = document.createElement('button');[cite: 6]
-        b.type = 'button';[cite: 6]
-        b.id = `pal-${i}`;[cite: 6]
-        b.innerText = i + 1;[cite: 6]
-        b.className = 'w-7 h-7 rounded text-[11px] font-bold flex items-center justify-center border transition';[cite: 6]
-        b.onclick = () => { currentIndex = i; renderQuestion(currentIndex); };[cite: 6]
-        pal.appendChild(b);[cite: 6]
-      }
-      updatePalette();[cite: 6]
-    }
-
-    function updatePalette() {
-      for (let i = 0; i < questionsData.length; i++) {
-        const b = document.getElementById(`pal-${i}`);[cite: 6]
-        if (!b) continue;[cite: 6]
-        if (i === currentIndex) {
-          b.className = 'w-7 h-7 rounded text-[11px] font-black border border-violet-400 bg-violet-400 text-slate-950';[cite: 6]
-        } else if (userAnswers[i] !== null) {
-          b.className = 'w-7 h-7 rounded text-[11px] font-semibold border border-emerald-500/50 bg-emerald-950/60 text-emerald-400';[cite: 6]
-        } else {
-          b.className = 'w-7 h-7 rounded text-[11px] font-medium border border-slate-700 bg-slate-900 text-slate-400';[cite: 6]
-        }
-      }
+      document.getElementById('prevBtn').disabled = (index === 0);
+      document.getElementById('nextBtn').innerText = (index === questionsData.length - 1) ? "സബ്മിറ്റ് ചെയ്യുക ✓" : "Next ›";
     }
 
     document.getElementById('nextBtn').onclick = () => {
       if (currentIndex < questionsData.length - 1) {
-        currentIndex++;[cite: 6]
-        renderQuestion(currentIndex);[cite: 6]
+        currentIndex++;
+        renderQuestion(currentIndex);
       } else {
-        finishExam();[cite: 6]
+        finishExam();
       }
     };
 
     document.getElementById('prevBtn').onclick = () => {
-      if (currentIndex > 0) { currentIndex--; renderQuestion(currentIndex); }[cite: 6]
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion(currentIndex);
+      }
     };
 
     document.getElementById('skipBtn').onclick = () => {
-      userAnswers[currentIndex] = null;[cite: 6]
+      userAnswers[currentIndex] = null;
       if (currentIndex < questionsData.length - 1) {
-        currentIndex++;[cite: 6]
-        renderQuestion(currentIndex);[cite: 6]
+        currentIndex++;
+        renderQuestion(currentIndex);
       } else {
-        finishExam();[cite: 6]
+        finishExam();
       }
     };
 
     document.getElementById('finishMidBtn').onclick = () => {
-      const answered = userAnswers.filter(a => a !== null).length;[cite: 6]
-      if (confirm(`നിങ്ങൾ 50-ൽ ${answered} ചോദ്യങ്ങൾക്ക് മാത്രമാണ് ഉത്തരം നൽകിയത്. ഇപ്പോൾ പരീക്ഷ അവസാനിപ്പിക്കണമെന്നുറപ്പാണോ?`)) {
-        finishExam();[cite: 6]
+      if (confirm('പരീക്ഷ അവസാനിപ്പിക്കണമെന്നുറപ്പാണോ?')) {
+        finishExam();
       }
     };
 
     function finishExam() {
-      if (timerInterval) clearInterval(timerInterval);[cite: 6]
+      if (timerInterval) clearInterval(timerInterval);
 
-      let correct = 0, wrong = 0, skipped = 0;[cite: 6]
+      let correct = 0, wrong = 0, skipped = 0;
       for (let i = 0; i < questionsData.length; i++) {
-        if (userAnswers[i] === null) skipped++;[cite: 6]
-        else if (userAnswers[i] === questionsData[i].ans) correct++;[cite: 6]
-        else wrong++;[cite: 6]
+        if (userAnswers[i] === null) skipped++;
+        else if (userAnswers[i] === questionsData[i].ans) correct++;
+        else wrong++;
       }
 
-      let netScore = (correct * 1.0) - (wrong * 0.33333333);[cite: 6]
-      if (netScore < 0) netScore = 0;[cite: 6]
-      const formattedScore = netScore.toFixed(2);[cite: 6]
-      const scoreNum = parseFloat(formattedScore);[cite: 6]
+      let netScore = (correct * 1.0) - (wrong * 0.33);
+      if (netScore < 0) netScore = 0;
+      const formattedScore = netScore.toFixed(2);
 
-      document.getElementById('finalScore').innerText = formattedScore;[cite: 6]
-      document.getElementById('correctCount').innerText = correct;[cite: 6]
-      document.getElementById('wrongCount').innerText = wrong;[cite: 6]
-      document.getElementById('skipCount').innerText = skipped;[cite: 6]
-      document.getElementById('resultCandidateInfo').innerText = `പരീക്ഷാർത്ഥി: ${currentUser.name} | മൊബൈൽ: ${currentUser.phone}`;[cite: 6]
-      document.getElementById('pdfReportCandidateSubheader').innerText = `പരീക്ഷാർത്ഥി: ${currentUser.name} (${currentUser.phone}) | സ്കോർ: ${formattedScore} / 50 | ശരി: ${correct} | തെറ്റ്: ${wrong} | Skip: ${skipped}`;[cite: 6]
+      document.getElementById('finalScore').innerText = formattedScore;
+      document.getElementById('correctCount').innerText = correct;
+      document.getElementById('wrongCount').innerText = wrong;
 
+      // പ്രൊഫൈൽ ഹിസ്റ്ററിയിലേക്ക് സേവ് ചെയ്യുന്നു
       try {
-        if (currentUser && currentUser.phone && currentUser.phone !== "0000000000") {
-          const historyKey = `sk_history_${currentUser.phone}`;
+        if (candidatePhone && candidatePhone !== "0000000000") {
+          const historyKey = `sk_history_${candidatePhone}`;
           let history = JSON.parse(localStorage.getItem(historyKey) || '[]');
           history.push({
-            title: examTitle || "രസതന്ത്രം (Chemistry Part 1)",
+            title: examTitle,
             score: formattedScore,
             correct: correct,
             wrong: wrong,
@@ -415,194 +287,21 @@
         }
       } catch (err) {}
 
-      const downloadBtn = document.getElementById('originalPdfDownloadLink');[cite: 6]
-      const lockNotice = document.getElementById('pdfLockNotice');[cite: 6]
-
-      if (scoreNum >= 15.0 && ORIGINAL_PDF_URL) {
-        downloadBtn.href = ORIGINAL_PDF_URL;[cite: 6]
-        downloadBtn.classList.remove('hidden');[cite: 6]
-        lockNotice.classList.add('hidden');[cite: 6]
-      } else {
-        downloadBtn.classList.add('hidden');[cite: 6]
-        if (ORIGINAL_PDF_URL) lockNotice.classList.remove('hidden');
-      }
-
-      renderSolutions();[cite: 6]
-      document.getElementById('quizScreen').classList.add('hidden');[cite: 6]
-      document.getElementById('resultScreen').classList.remove('hidden');[cite: 6]
-      window.scrollTo({ top: 0, behavior: 'smooth' });[cite: 6]
-
-      sendResultToGoogleSheet({
-        name: currentUser.name,
-        phone: currentUser.phone,
-        score: formattedScore,
-        correct: correct,
-        wrong: wrong,
-        skipped: skipped
-      });[cite: 6]
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('resultScreen').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function sendResultToGoogleSheet(payload) {
-      const statusDiv = document.getElementById('sheetStatus');[cite: 6]
-      if (!GOOGLE_SHEET_WEBAPP_URL || GOOGLE_SHEET_WEBAPP_URL.includes("YOUR_APPS_SCRIPT_WEBAPP_URL_HERE")) {
-        statusDiv.innerText = "Google Sheet ലിങ്ക് നൽകിയിട്ടില്ല (മാർക്ക് മുകളിൽ ലഭ്യമാണ്).";[cite: 6]
-        statusDiv.classList.remove('animate-pulse');[cite: 6]
-        return;
-      }
+    function returnToHomeWithData() {
+      const homePortalUrl = "https://subhash-kumar00.github.io/PSC-EXAMS/";
+      const score = document.getElementById('finalScore').innerText;
+      const correct = document.getElementById('correctCount').innerText;
+      const wrong = document.getElementById('wrongCount').innerText;
+      const skipped = document.getElementById('skipCount').innerText;
 
-      fetch(GOOGLE_SHEET_WEBAPP_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        statusDiv.innerText = "✓ മാർക്ക് ഗൂഗിൾ ഷീറ്റിലേക്ക് വിജയകരമായി രേഖപ്പെടുത്തി!";[cite: 6]
-        statusDiv.className = "text-xs text-emerald-400";
-      })
-      .catch(() => {
-        statusDiv.innerText = "ഡാറ്റ സേവ് ചെയ്യുന്നതിൽ ചെറിയ തടസ്സം നേരിട്ടു.";[cite: 6]
-        statusDiv.className = "text-xs text-rose-400";
-      });
+      window.location.href = `${homePortalUrl}?completed=true&title=${encodeURIComponent(examTitle)}&score=${score}&correct=${correct}&wrong=${wrong}&skipped=${skipped}`;
     }
-
-    function renderSolutions() {
-      const cont = document.getElementById('solutionsContainer');[cite: 6]
-      cont.innerHTML = '';[cite: 6]
-      const letters = ['A', 'B', 'C', 'D'];[cite: 6]
-
-      questionsData.forEach((q, idx) => {
-        const uAns = userAnswers[idx];[cite: 6]
-        const isCorrect = uAns === q.ans;[cite: 6]
-        const isSkipped = uAns === null;[cite: 6]
-
-        let badge = isSkipped 
-          ? '<span class="px-2 py-0.5 rounded text-xs bg-slate-700 text-slate-300">Skipped (മാർക്ക് മാറ്റമില്ല)</span>' 
-          : isCorrect 
-          ? '<span class="px-2 py-0.5 rounded text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">+1.00 Mark (ശരിയുത്തരം)</span>' 
-          : '<span class="px-2 py-0.5 rounded text-xs bg-rose-950 text-rose-400 border border-rose-800 font-bold">-0.33 Mark (തെറ്റ്)</span>';[cite: 6]
-
-        let optsHtml = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">';[cite: 6]
-        q.options.forEach((opt, oIdx) => {
-          let c = 'p-2.5 rounded-lg text-xs flex items-center space-x-2 border ';[cite: 6]
-          if (oIdx === q.ans) c += 'border-emerald-500 bg-emerald-950/40 text-emerald-300 font-semibold';[cite: 6]
-          else if (oIdx === uAns && !isCorrect) c += 'border-rose-500 bg-rose-950/40 text-rose-300 line-through';[cite: 6]
-          else c += 'border-slate-800 text-slate-400';[cite: 6]
-
-          optsHtml += `
-            <div class="${c}">
-              <span class="font-bold">${letters[oIdx]})</span>
-              <span>${opt}</span>
-              ${oIdx === q.ans ? '<span class="ml-auto text-emerald-400 font-bold">✓ ശരി</span>' : ''}
-              ${oIdx === uAns && !isCorrect ? '<span class="ml-auto text-rose-400 font-bold">✗ നിങ്ങൾ തിരഞ്ഞെടുത്തത്</span>' : ''}
-            </div>
-          `;[cite: 6]
-        });
-        optsHtml += '</div>';[cite: 6]
-
-        const item = document.createElement('div');[cite: 6]
-        item.className = 'p-4 rounded-xl border border-slate-700 bg-slate-900/70 space-y-2';[cite: 6]
-        item.innerHTML = `
-          <div class="flex justify-between items-start gap-2">
-            <span class="font-bold text-violet-400 text-sm">ചോദ്യം ${idx + 1}</span>
-            <div>${badge}</div>
-          </div>
-          <p class="text-sm font-medium text-slate-200 whitespace-pre-line">${q.q}</p>
-          ${optsHtml}
-          <div class="bg-slate-800/90 p-3 rounded-lg border border-slate-700 mt-2 text-xs leading-relaxed">
-            <span class="font-bold text-violet-300">വിശദീകരണം:</span>
-            <span class="text-slate-300 ml-1">${q.exp}</span>
-          </div>
-        `;[cite: 6]
-        cont.appendChild(item);[cite: 6]
-      });
-    }
-
-    document.getElementById('downloadPdfBtn').addEventListener('click', () => {
-      const element = document.getElementById('pdfExportWrapper');[cite: 6]
-      const opt = {
-        margin:       [10, 10, 10, 10],
-        filename:     `${currentUser.name}_Chemistry_Part1_Scorecard.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#1e293b' },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };[cite: 6]
-
-      const btn = document.getElementById('downloadPdfBtn');[cite: 6]
-      btn.innerText = 'PDF തയ്യാറാക്കുന്നു...';[cite: 6]
-      btn.disabled = true;[cite: 6]
-
-      html2pdf().set(opt).from(element).save().then(() => {
-        btn.innerHTML = `
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-          <span>PDF ഡൗൺലോഡ് ആയി!</span>
-        `;[cite: 6]
-        setTimeout(() => {
-          btn.innerHTML = `
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            <span>സ്കോർകാർഡ് PDF</span>
-          `;[cite: 6]
-          btn.disabled = false;[cite: 6]
-        }, 3000);
-      });
-    });
-
-    function fetchLiveLeaderboard() {
-      const modal = document.getElementById('leaderboardModal');[cite: 6]
-      const loader = document.getElementById('leaderboardLoading');[cite: 6]
-      const wrapper = document.getElementById('leaderboardTableWrapper');[cite: 6]
-      const tbody = document.getElementById('leaderboardBody');[cite: 6]
-
-      modal.classList.remove('hidden');[cite: 6]
-      loader.classList.add('hidden');[cite: 6]
-      wrapper.classList.remove('hidden');[cite: 6]
-      tbody.innerHTML = '';[cite: 6]
-
-      if (!GOOGLE_SHEET_WEBAPP_URL || GOOGLE_SHEET_WEBAPP_URL.includes("YOUR_APPS_SCRIPT_WEBAPP_URL_HERE")) {
-        loader.innerText = "Google Apps Script URL സെറ്റ് ചെയ്തിട്ടില്ല.";[cite: 6]
-        return;
-      }
-
-      fetch(GOOGLE_SHEET_WEBAPP_URL)[cite: 6]
-        .then(res => res.json())[cite: 6]
-        .then(data => {
-          loader.classList.add('hidden');[cite: 6]
-          wrapper.classList.remove('hidden');[cite: 6]
-
-          if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="py-6 text-center text-slate-500">ഇതുവരെ ആരും പരീക്ഷ പൂർത്തിയാക്കിയിട്ടില്ല.</td></tr>';[cite: 6]
-            return;
-          }
-
-          data.sort((a, b) => b.score - a.score || b.correct - a.correct);[cite: 6]
-
-          data.forEach((entry, idx) => {
-            const masked = entry.phone ? String(entry.phone).substring(0, 5) + '*****' : '---';[cite: 6]
-            const row = document.createElement('tr');[cite: 6]
-            row.className = 'hover:bg-slate-700/30 text-slate-300';[cite: 6]
-            row.innerHTML = `
-              <td class="py-2.5 px-3 font-mono font-bold">${idx + 1}</td>
-              <td class="py-2.5 px-3 font-medium">${entry.name}</td>
-              <td class="py-2.5 px-3 font-mono text-xs text-slate-400">${masked}</td>
-              <td class="py-2.5 px-3 text-right font-mono font-bold text-violet-400">${Number(entry.score || 0).toFixed(2)}</td>
-            `;[cite: 6]
-            tbody.appendChild(row);[cite: 6]
-          });
-        })
-        .catch(() => {
-          loader.innerText = "റാങ്ക് ലിസ്റ്റ് ലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല. ദയവായി അല്പം കഴിഞ്ഞ് ശ്രമിക്കുക.";[cite: 6]
-        });
-    }
-
-    // Leaderboard button may or may not exist depending on home page migration, safe check
-    const showLbBtn = document.getElementById('showLeaderboardBtn');
-    if (showLbBtn) showLbBtn.onclick = fetchLiveLeaderboard;
-
-    const closeLb1 = document.getElementById('closeLeaderboardBtn');
-    if (closeLb1) closeLb1.onclick = () => document.getElementById('leaderboardModal').classList.add('hidden');
-
-    const closeLb2 = document.getElementById('closeLeaderboardBtn2');
-    if (closeLb2) closeLb2.onclick = () => document.getElementById('leaderboardModal').classList.add('hidden');
   </script>
 </body>
 </html>
+```[cite: 3]
