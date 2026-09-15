@@ -35,37 +35,8 @@
   <!-- Main Container -->
   <main class="flex-1 flex flex-col items-center justify-center p-3 sm:p-6 w-full max-w-5xl mx-auto">
     
-    <!-- Step 1: Welcome & Start Screen -->
-    <div id="motivationScreen" class="w-full max-w-lg bg-slate-800 border-2 border-violet-500/60 rounded-3xl p-8 sm:p-10 shadow-2xl text-center space-y-6">
-      <div class="w-20 h-20 bg-gradient-to-tr from-violet-500 to-fuchsia-600 rounded-full flex items-center justify-center mx-auto text-4xl shadow-xl animate-bounce">
-        🧪
-      </div>
-      <div>
-        <h2 id="motivateName" class="text-2xl sm:text-3xl font-black text-white">ഹലോ! ✨</h2>
-        <p class="text-violet-400 font-extrabold text-xs sm:text-sm mt-1 uppercase tracking-widest">രസതന്ത്ര പരീക്ഷയിലേക്ക് സ്വാഗതം!</p>
-      </div>
-
-      <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-700 text-slate-200 text-xs sm:text-sm leading-relaxed space-y-2 shadow-inner">
-        <p class="font-bold text-violet-400 text-sm">"കൃത്യതയും സ്ഥിരമായ പരിശീലനവുമാണ് വിജയത്തിലേക്കുള്ള ഏറ്റവും നല്ല വഴി."</p>
-        <p class="text-slate-300">നെഗറ്റീവ് മാർക്കുകൾ പരമാവധി ഒഴിവാക്കി ആത്മവിശ്വാസത്തോടെ ചോദ്യങ്ങൾക്ക് ഉത്തരം നൽകുക!</p>
-      </div>
-
-      <!-- Start Button -->
-      <div class="pt-2">
-        <button type="button" id="startExamBtn" class="w-full py-4 bg-gradient-to-r from-violet-500 to-fuchsia-600 hover:from-violet-600 text-white font-black rounded-2xl transition transform active:scale-95 shadow-xl text-base flex items-center justify-center space-x-2 cursor-pointer">
-          <span>പരീക്ഷ ആരംഭിക്കുക</span>
-          <span>🚀</span>
-        </button>
-      </div>
-
-      <div id="countdownBox" class="hidden pt-2">
-        <span class="text-xs font-semibold text-slate-400 block mb-2 uppercase tracking-wide">പരീക്ഷ ആരംഭിക്കുന്നു...</span>
-        <div id="countdownNumber" class="text-6xl font-black text-violet-400 font-mono">3</div>
-      </div>
-    </div>
-
-    <!-- Step 2: Quiz Question Screen -->
-    <div id="quizScreen" class="w-full hidden flex-col space-y-4">
+    <!-- Step 1: Quiz Question Screen (Directly Visible) -->
+    <div id="quizScreen" class="w-full flex flex-col space-y-4">
       <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 shadow-md">
         <div class="flex items-center space-x-3">
           <span class="px-3 py-1 bg-violet-500/20 text-violet-300 font-bold rounded-lg text-xs sm:text-sm" id="questionBadge">ചോദ്യം 1 / 50</span>
@@ -111,7 +82,7 @@
       </div>
     </div>
 
-    <!-- Step 3: Result Screen -->
+    <!-- Step 2: Result Screen -->
     <div id="resultScreen" class="w-full hidden space-y-6">
       <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl text-center space-y-5">
         
@@ -301,36 +272,26 @@
 
       document.getElementById('displayUser').innerText = `${currentUser.name} (+91 ${currentUser.phone})`;
       document.getElementById('motivateName').innerText = `ഹലോ, ${currentUser.name}! ✨`;
+
+      // 🌟 സ്റ്റാർട്ട് ബട്ടൺ അമർത്തുമ്പോൾ യാതൊരു തടസ്സവുമില്ലാതെ പരീക്ഷ നേരിട്ട് തുടങ്ങും
+      const startBtn = document.getElementById('startExamBtn');
+      if (startBtn) {
+        startBtn.addEventListener('click', () => {
+          const motScreen = document.getElementById('motivationScreen');
+          if (motScreen) motScreen.classList.add('hidden');
+
+          const qScreen = document.getElementById('quizScreen');
+          if (qScreen) {
+            qScreen.classList.remove('hidden');
+            qScreen.classList.add('flex');
+          }
+
+          buildPalette();
+          renderQuestion(0);
+          startTimer();
+        });
+      }
     });
-
-    // നേരിട്ട് പരീക്ഷ തുടങ്ങാനുള്ള സുരക്ഷിത ഫംഗ്ഷൻ (ഏത് ഡിവൈസിലും വർക്ക് ചെയ്യും)
-    function startTheExamNow() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtx) {
-          const ctx = new AudioCtx();
-          if (ctx.state === 'suspended') ctx.resume();
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-          gain.gain.setValueAtTime(0.1, ctx.currentTime);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + 0.1);
-        }
-      } catch(e) {}
-
-      document.getElementById('motivationScreen').classList.add('hidden');
-      const qScreen = document.getElementById('quizScreen');
-      qScreen.classList.remove('hidden');
-      qScreen.classList.add('flex');
-
-      buildPalette();
-      renderQuestion(0);
-      startTimer();
-    }
 
     function returnToHomeWithData() {
       const homePortalUrl = "https://subhash-kumar00.github.io/PSC-EXAMS/";
@@ -638,8 +599,8 @@
       const tbody = document.getElementById('leaderboardBody');[cite: 6]
 
       modal.classList.remove('hidden');[cite: 6]
-      loader.classList.add('hidden');[cite: 6]
-      wrapper.classList.remove('hidden');[cite: 6]
+      loader.classList.remove('hidden');[cite: 6]
+      wrapper.classList.add('hidden');[cite: 6]
       tbody.innerHTML = '';[cite: 6]
 
       if (!GOOGLE_SHEET_WEBAPP_URL || GOOGLE_SHEET_WEBAPP_URL.includes("YOUR_APPS_SCRIPT_WEBAPP_URL_HERE")) {
@@ -668,7 +629,7 @@
               <td class="py-2.5 px-3 font-mono font-bold">${idx + 1}</td>
               <td class="py-2.5 px-3 font-medium">${entry.name}</td>
               <td class="py-2.5 px-3 font-mono text-xs text-slate-400">${masked}</td>
-              <td class="py-2.5 px-3 text-right font-mono font-bold text-violet-400">${Number(entry.score).testid ? Number(entry.score).toFixed(2) : Number(entry.score || 0).toFixed(2)}</td>
+              <td class="py-2.5 px-3 text-right font-mono font-bold text-violet-400">${Number(entry.score || 0).toFixed(2)}</td>
             `;[cite: 6]
             tbody.appendChild(row);[cite: 6]
           });
